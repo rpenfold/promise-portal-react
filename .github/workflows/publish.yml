@@ -17,3 +17,7 @@ jobs:
       - name: Run Tests
         run: npm t
       - run: npm version ${GITHUB_REF##*/} -git-tag-version false
+      - name: Publish
+        run: npm publish --access public
+      - name: Commit Changes
+        run: git add . && git commit -m "release ${GITHUB_REF##*/}" && git push
