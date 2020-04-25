@@ -101,8 +101,8 @@ class PromisePortal extends PureComponent<Props, State> {
           componentKey={key}
           index={index}
           data={componentData}
-          cancel={this.handleCancel}
-          complete={this.handleComplete}
+          onCancel={this.handleCancel}
+          onComplete={this.handleComplete}
           onError={this.handleError}
         />
       );

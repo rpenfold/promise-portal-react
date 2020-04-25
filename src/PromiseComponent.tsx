@@ -6,8 +6,8 @@ export interface Props {
   index: number;
   data: PromisePortalComponent;
   onError(key: string, error: Error, info: ErrorInfo): void;
-  cancel(key: string): void;
-  complete(key: string, data: object): void;
+  onCancel(key: string): void;
+  onComplete(key: string, data: object): void;
 }
 
 interface State {
@@ -31,28 +31,28 @@ class PromiseComponent extends React.Component<Props, State> {
   }
 
   handleCancel = () => {
-    const { cancel, componentKey } = this.props;
-    cancel(componentKey);
+    const { onCancel, componentKey } = this.props;
+    onCancel(componentKey);
   }
 
   handleComplete = () => {
-    const { complete, componentKey, data } = this.props;
-    complete(componentKey, data);
+    const { onComplete, componentKey, data } = this.props;
+    onComplete(componentKey, data);
   }
 
   render() {
-    const { data, index } = this.props;
+    const { data, index, onCancel, onComplete } = this.props;
     const { hasErrors } = this.state;
 
-    if (hasErrors || !data || (index > 0 && !data.forceShow)) return null;
+    if (hasErrors || (index > 0 && !data.forceShow)) return null;
 
     const { Component, props } = data;
 
     return (
       <Component
         {...props}
-        cancel={this.props.cancel}
-        complete={this.props.complete}
+        cancel={onCancel}
+        complete={onComplete}
       />
     );
   }
