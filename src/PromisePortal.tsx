@@ -24,12 +24,16 @@ class PromisePortal extends PureComponent<Props, State> {
 
   static show = (component: ReactType | string, config = {}) => {
     if (!PromisePortal.instance) {
-      console.error("Unable to find PromisePortal");
+      throw Error("PromisePortal not found");
     }
 
     const Component = typeof component === "string"
       ? ComponentRegistry.find(component)
       : component;
+
+    if (!Component) {
+      throw Error("Component not found");
+    }
 
     return new Promise((resolve, reject) => {
       const key = Date.now().toString();
