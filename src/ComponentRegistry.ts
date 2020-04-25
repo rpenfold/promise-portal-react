@@ -7,6 +7,10 @@ class ComponentRegistry {
         ComponentRegistry.registry[key] = Component;
     }
 
+    static registerCollection(components: Record<string, ReactType>) {
+        ComponentRegistry.registry = Object.assign(ComponentRegistry.registry, components);
+    }
+
     static unregister(key: string) {
         delete ComponentRegistry.registry[key];
     }

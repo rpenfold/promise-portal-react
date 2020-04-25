@@ -82,6 +82,8 @@ ComponentRegistry.register("myComponent", MyComponent);
 // ...
 ```
 
+You can also register a collection of components using `ComponentRegistry.registerCollection(collection)` where collection is an object whose keys are the the component key, and whose values are the React component to register.
+
 ### Queuing
 
 Promise-portal utilizes a stack to support queuing of promise-components. This helps prevent things like modals from appearing on top of each other, and can be used for orchestration of flows. Once the promise-component on the bottom of the stack is completed, then next one will display.
