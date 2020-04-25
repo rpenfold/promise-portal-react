@@ -5,13 +5,15 @@ on:
     tags:
       - 'v[0-9].[0-9].[0-9]'
 
-    
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Branch
+        uses: actions/checkout@v2
       - run: echo ${GITHUB_REF##*/}
-      - run: npm ci
-      - run: npm t
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm t
       - run: npm version ${GITHUB_REF##*/} -git-tag-version false

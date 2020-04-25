@@ -10,7 +10,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Branch
+        uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm ci
       - name: Run Tests
