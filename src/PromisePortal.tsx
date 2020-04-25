@@ -1,6 +1,7 @@
 import React, { ErrorInfo, PureComponent, ReactNode, ReactType } from "react";
 import { PromiseComponentConfig } from "./types";
 import PromiseComponent from "./PromiseComponent";
+import ComponentRegistry from "./ComponentRegistry";
 
 interface Props { };
 
@@ -21,13 +22,17 @@ export interface PromisePortalComponent extends PromiseComponentConfig {
 class PromisePortal extends PureComponent<Props, State> {
   static instance: PromisePortal;
 
-  static show = (Component: ReactType, config = {}) => {
+  static show = (component: ReactType | string, config = {}) => {
     if (!PromisePortal.instance) {
       console.error("Unable to find PromisePortal");
     }
 
+    const Component = typeof component === "string"
+      ? ComponentRegistry.find(component)
+      : component;
+
     return new Promise((resolve, reject) => {
-      const key = "0";
+      const key = Date.now().toString();
       const component: PromisePortalComponent = {
         ...config,
         Component,

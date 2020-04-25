@@ -62,3 +62,28 @@ Because promise-components can be shown imperatively it is possible to invoke th
 ## Caveats
 
 Since promise-components are being rendered via a promise, the in-going props cannot be updated. In many cases this is acceptable, or even desired behavior, but it is important to be aware of. Components being shown can still manage their own data dependencies internally, but the caller cannot pass down new props. At some point this feature may be added, but I haven't found any use for it yet.
+
+## Advanced Usage
+
+### Component Registry
+
+Registering a component with promise-portal allows you to later show that component by calling show with the specified key instead of the React component:
+
+```javascript
+import { ComponentRegistry }  from "react-promise-portal";
+import MyComponent from "./MyComponent";
+//...
+ComponentRegistry.register("myComponent", MyComponent);
+//...
+  onButtonPress = async () => {
+    const result = await PromisePortal.show("myComponent");
+    // ...
+  }
+// ...
+```
+
+### Queuing
+
+Promise-portal utilizes a stack to support queuing of promise-components. This helps prevent things like modals from appearing on top of each other, and can be used for orchestration of flows. Once the promise-component on the bottom of the stack is completed, then next one will display.
+
+By default, only the component at the bottom of the stack will be displayed, though you can force a component to display using the `forceShow` option of the component configuration;
