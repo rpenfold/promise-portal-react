@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react";
 import { PromisePortalComponent } from "./PromisePortal";
 
-interface Props {
+export interface Props {
   componentKey: string;
   index: number;
   data: PromisePortalComponent;

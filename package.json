@@ -4,8 +4,8 @@
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,17 @@
   },
   "homepage": "https://github.com/rpenfold/react-promise-portal#readme",
   "devDependencies": {
+    "@types/enzyme": "3.10.5",
+    "@types/jest": "25.2.1",
     "@types/react": "16.9.34",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "jest": "25.4.0",
+    "ts-jest": "25.4.0",
     "typescript": "3.8.3"
   },
   "dependencies": {
-    "react": "16.13.1"
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   }
 }

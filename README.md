@@ -1,16 +1,16 @@
 # react-promise-portal
 
-Modals in React are difficult for a couple main reasons. (1) They require a lot of boilerplate to set up, and (2) they are typically "fire and forget", so the caller cannot know what was the result of the user's interaction with the modal. PromisePortal solves these problems.
+Modals in React are difficult for a couple main reasons. (1) They require a lot of boilerplate to set up, and (2) they are typically "fire and forget", so the caller cannot know what was the result of the user's interaction with the modal. PromisePortal solves these problems, and more.
 
 ## Installation
 
-For npm users:
+For npm:
 
 ```bash
 npm i react-promise-portal
 ```
 
-and for yarn:
+For yarn:
 
 ```bash
 yarn add react-promise-portal
