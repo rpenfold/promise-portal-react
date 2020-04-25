@@ -1,6 +1,6 @@
 # react-promise-portal
 
-![Tests](https://github.com/rpenfold/react-promise-portal/workflows/test/badge.svg)
+![Tests](https://github.com/rpenfold/react-promise-portal/workflows/Test/badge.svg)
 
 Modals in React are difficult for a couple main reasons. (1) They require a lot of boilerplate to set up, and (2) they are typically "fire and forget", so the caller cannot know what was the result of the user's interaction with the modal. PromisePortal solves these problems, and more.
 

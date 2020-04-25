@@ -1,4 +1,4 @@
-name: NPM Publish CI
+name: Test
 
 on:
   push:
