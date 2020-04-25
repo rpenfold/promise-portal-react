@@ -1,7 +1,7 @@
 import { ReactType } from "react";
 
 class ComponentRegistry {
-    private static registry: Record<string, ReactType>;
+    private static registry: Record<string, ReactType> = {};
 
     static register(key: string, Component: ReactType) {
         ComponentRegistry.registry[key] = Component;
@@ -17,6 +17,14 @@ class ComponentRegistry {
 
     static find(key: string): ReactType {
         return ComponentRegistry.registry[key];
+    }
+
+    static clear() {
+        ComponentRegistry.registry = {};
+    }
+
+    static size() {
+        return Object.keys(ComponentRegistry.registry).length;
     }
 }
 
