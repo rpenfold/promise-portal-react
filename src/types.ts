@@ -16,3 +16,5 @@ export interface PromiseComponentResult {
     error?: Error;
     errorInfo?: ErrorInfo;
 }
+
+export type PromisePortalProps = null | {};

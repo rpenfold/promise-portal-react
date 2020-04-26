@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ComponentRegistry from "../ComponentRegistry";
 
 const mockComponent1 = { key: "1", Component };

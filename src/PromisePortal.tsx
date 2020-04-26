@@ -1,9 +1,7 @@
 import React, { ErrorInfo, PureComponent, ReactType, ReactNode } from "react";
-import { PromiseComponentConfig, PromiseComponentResult } from "./types";
+import { PromisePortalProps as Props, PromiseComponentConfig, PromiseComponentResult } from "./types";
 import PromiseComponent from "./PromiseComponent";
 import ComponentRegistry from "./ComponentRegistry";
-
-type Props = null;
 
 interface State {
   componentKeys: Array<string>;
@@ -20,10 +18,12 @@ export interface PromisePortalComponent extends PromiseComponentConfig {
 }
 
 class PromisePortal extends PureComponent<Props, State> {
-  static instance: PromisePortal;
+  static instance: PromisePortal | undefined;
 
   static show = (component: ReactType | string, config = {}): Promise<PromiseComponentResult> => {
-    if (!PromisePortal.instance) {
+    const portal = PromisePortal.instance;
+    
+    if (!portal) {
       throw Error("PromisePortal not found");
     }
 
@@ -42,7 +42,7 @@ class PromisePortal extends PureComponent<Props, State> {
         Component,
         promiseInfo: { resolve, reject }
       };
-      PromisePortal.instance.pushComponent(key, component);
+      portal.pushComponent(key, component);
     });
   };
 
@@ -57,12 +57,6 @@ class PromisePortal extends PureComponent<Props, State> {
 
     PromisePortal.instance = this;
   }
-
-  pushComponent = (key: string, component: PromisePortalComponent): void => {
-    const { componentKeys } = this.state;
-    this.components[key] = component;
-    this.setState({ componentKeys: [key, ...componentKeys] });
-  };
 
   handleCancel = (key: string): void => {
     const { promiseInfo } = this.components[key];
@@ -81,7 +75,13 @@ class PromisePortal extends PureComponent<Props, State> {
     promiseInfo.reject({ cancelled: false, error, errorInfo });
   };
 
-  removeComponent = (key = ""): void => {
+  pushComponent = (key: string, component: PromisePortalComponent): void => {
+    const { componentKeys } = this.state;
+    this.components[key] = component;
+    this.setState({ componentKeys: [key, ...componentKeys] });
+  };
+
+  removeComponent = (key: string): void => {
     const { componentKeys } = this.state;
     delete this.components[key];
     this.setState({
