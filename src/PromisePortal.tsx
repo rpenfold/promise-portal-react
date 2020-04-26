@@ -1,17 +1,17 @@
-import React, { ErrorInfo, PureComponent, ReactNode, ReactType } from "react";
-import { PromiseComponentConfig } from "./types";
+import React, { ErrorInfo, PureComponent, ReactType, ReactNode } from "react";
+import { PromiseComponentConfig, PromiseComponentResult } from "./types";
 import PromiseComponent from "./PromiseComponent";
 import ComponentRegistry from "./ComponentRegistry";
 
-interface Props { };
+type Props = null;
 
 interface State {
   componentKeys: Array<string>;
-};
+}
 
 interface PromiseComponentInfo {
-  resolve(result: object): void;
-  reject(result: object): void;
+  resolve(result: PromiseComponentResult): void;
+  reject(result: PromiseComponentResult): void;
 }
 
 export interface PromisePortalComponent extends PromiseComponentConfig {
@@ -22,7 +22,7 @@ export interface PromisePortalComponent extends PromiseComponentConfig {
 class PromisePortal extends PureComponent<Props, State> {
   static instance: PromisePortal;
 
-  static show = (component: ReactType | string, config = {}) => {
+  static show = (component: ReactType | string, config = {}): Promise<PromiseComponentResult> => {
     if (!PromisePortal.instance) {
       throw Error("PromisePortal not found");
     }
@@ -58,30 +58,30 @@ class PromisePortal extends PureComponent<Props, State> {
     PromisePortal.instance = this;
   }
 
-  pushComponent = (key: string, component: PromisePortalComponent) => {
+  pushComponent = (key: string, component: PromisePortalComponent): void => {
     const { componentKeys } = this.state;
     this.components[key] = component;
     this.setState({ componentKeys: [key, ...componentKeys] });
   };
 
-  handleCancel = (key: string) => {
+  handleCancel = (key: string): void => {
     const { promiseInfo } = this.components[key];
     promiseInfo.resolve({ cancelled: true });
     this.removeComponent(key);
   };
 
-  handleComplete = (key: string, data: object) => {
+  handleComplete = (key: string, data: object): void => {
     const { promiseInfo } = this.components[key];
-    promiseInfo.resolve({ data });
+    promiseInfo.resolve({ cancelled: false, data });
     this.removeComponent(key);
   };
 
-  handleError = (key: string, error: Error, info: ErrorInfo) => {
+  handleError = (key: string, error: Error, errorInfo: ErrorInfo): void => {
     const { promiseInfo } = this.components[key];
-    promiseInfo.reject({ key, error, info });
+    promiseInfo.reject({ cancelled: false, error, errorInfo });
   };
 
-  removeComponent = (key = "") => {
+  removeComponent = (key = ""): void => {
     const { componentKeys } = this.state;
     delete this.components[key];
     this.setState({
@@ -89,7 +89,7 @@ class PromisePortal extends PureComponent<Props, State> {
     });
   };
 
-  render() {
+  render(): ReactNode {
     const { componentKeys } = this.state;
 
     return componentKeys.map((key, index) => {

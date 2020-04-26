@@ -1,3 +1,5 @@
+import { ErrorInfo } from "react";
+
 export interface PromiseComponentConfig {
     forceShow?: boolean;
     props?: object;
@@ -10,5 +12,7 @@ export interface PromiseComponentProps {
 
 export interface PromiseComponentResult {
     cancelled: boolean;
-    data: object;
+    data?: object;
+    error?: Error;
+    errorInfo?: ErrorInfo;
 }

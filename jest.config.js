@@ -1,14 +1,16 @@
+/* eslint-disable no-undef */
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   setupFiles: [
     "./config/testSetup.js"
   ],
+  
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*",
-    "!**/node_modules/**",
-    "!**/dist/**"
+    "!node_modules/**",
+    "!dist/**"
   ],
   // coverageThreshold: {
   //   global: {
@@ -18,4 +20,7 @@ module.exports = {
   //     statements: 100
   //   }
   // }
+  modulePathIgnorePatterns: [
+    "dist"
+  ]
 };

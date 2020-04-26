@@ -3,15 +3,15 @@ import { ReactType } from "react";
 class ComponentRegistry {
     private static registry: Record<string, ReactType> = {};
 
-    static register(key: string, Component: ReactType) {
+    static register(key: string, Component: ReactType): void {
         ComponentRegistry.registry[key] = Component;
     }
 
-    static registerCollection(components: Record<string, ReactType>) {
+    static registerCollection(components: Record<string, ReactType>): void {
         ComponentRegistry.registry = Object.assign(ComponentRegistry.registry, components);
     }
 
-    static unregister(key: string) {
+    static unregister(key: string): void {
         delete ComponentRegistry.registry[key];
     }
 
@@ -19,11 +19,11 @@ class ComponentRegistry {
         return ComponentRegistry.registry[key];
     }
 
-    static clear() {
+    static clear(): void {
         ComponentRegistry.registry = {};
     }
 
-    static size() {
+    static size(): number {
         return Object.keys(ComponentRegistry.registry).length;
     }
 }

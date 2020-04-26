@@ -1,4 +1,4 @@
-import React, { ErrorInfo } from "react";
+import React, { ErrorInfo, ReactNode } from "react";
 import { PromisePortalComponent } from "./PromisePortal";
 
 export interface Props {
@@ -23,24 +23,24 @@ class PromiseComponent extends React.Component<Props, State> {
     };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     const { componentKey, onError } = this.props;
     this.setState({ hasErrors: true }, () => {
       onError(componentKey, error, info);
     });
   }
 
-  handleCancel = () => {
+  handleCancel = (): void => {
     const { onCancel, componentKey } = this.props;
     onCancel(componentKey);
   }
 
-  handleComplete = () => {
+  handleComplete = (): void => {
     const { onComplete, componentKey, data } = this.props;
     onComplete(componentKey, data);
   }
 
-  render() {
+  render(): ReactNode {
     const { data, index, onCancel, onComplete } = this.props;
     const { hasErrors } = this.state;
 
