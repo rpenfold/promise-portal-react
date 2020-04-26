@@ -22,8 +22,8 @@ jobs:
         run: npm t
       - name: Coverage to Codecov
         run: node ./node_modules/codecov/bin/codecov
-      - name: Coverage to Codacy
-        uses: codacy/codacy-coverage-reporter-action@master
+      # - name: Coverage to Codacy
+      #   uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         env:
