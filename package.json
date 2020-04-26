@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
