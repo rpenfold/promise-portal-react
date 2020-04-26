@@ -22,5 +22,8 @@ jobs:
         run: npm t
       - name: Coverage
         run: node ./node_modules/codecov/bin/codecov
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         env:
           CODECOV_TOKEN: "2ac0ef32-0494-4b52-89f1-decc18cfd628"
