@@ -2,5 +2,6 @@ coverage
 config
 jest.config.js
 src
+tsconfig.json
 .eslintrc
 .github
