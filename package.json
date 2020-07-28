@@ -1,14 +1,13 @@
 {
   "name": "@lyv/react-promise-portal",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
     "test": "jest",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "tsc"
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
