@@ -1,5 +1,13 @@
 import { ReactType } from "react";
 
+/**
+ * ComponentRegistry is used for registering react components to
+ * later display using a specified string rather than a component.
+ * `PromisePortal.show()` accepts either a string or component as
+ * the first parameter. If it is a string, then it will do a lookup
+ * in ComponentRegistry to find the react component that was regist-
+ * ered with that string.
+ */
 class ComponentRegistry {
     private static registry: Record<string, ReactType> = {};
 
