@@ -1,6 +1,6 @@
 {
   "name": "@lyv/react-promise-portal",
-  "version": "0.1.1-alpha",
+  "version": "0.1.2-alpha",
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
@@ -25,6 +25,10 @@
     "url": "https://github.com/rpenfold/react-promise-portal/issues"
   },
   "homepage": "https://github.com/rpenfold/react-promise-portal#readme",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
   "devDependencies": {
     "@types/enzyme": "3.10.5",
     "@types/jest": "25.2.1",
@@ -40,9 +44,5 @@
     "jest": "25.4.0",
     "ts-jest": "25.4.0",
     "typescript": "3.8.3"
-  },
-  "dependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
   }
 }
