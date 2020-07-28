@@ -1,4 +1,6 @@
 coverage
-src
 config
+jest.config.js
+src
+.eslintrc
 .github
