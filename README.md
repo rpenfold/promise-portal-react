@@ -12,13 +12,13 @@ Modals in React are difficult for a couple main reasons. (1) They require a lot 
 For npm:
 
 ```bash
-npm i react-promise-portal
+npm i @lyv/react-promise-portal
 ```
 
 For yarn:
 
 ```bash
-yarn add react-promise-portal
+yarn add @lyv/react-promise-portal
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ yarn add react-promise-portal
 First off, you need to mount the portal somewhere in the application. Ideally, it should be close to the root, but below any configuration components like context providers, global error boundaries, etc.
 
 ```javascript
-import PromisePortal from "react-promise-portal";
+import PromisePortal from "@lyv/react-promise-portal";
 // ...
   return (
     <View>
@@ -73,7 +73,7 @@ Since promise-components are being rendered via a promise, the in-going props ca
 Registering a component with promise-portal allows you to later show that component by calling show with the specified key instead of the React component:
 
 ```javascript
-import { ComponentRegistry }  from "react-promise-portal";
+import { ComponentRegistry }  from "@lyv/react-promise-portal";
 import MyComponent from "./MyComponent";
 //...
 ComponentRegistry.register("myComponent", MyComponent);
