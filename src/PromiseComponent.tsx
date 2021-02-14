@@ -1,13 +1,9 @@
 import React, { ErrorInfo, ReactNode } from "react";
-import { PromisePortalComponent } from "./PromisePortal";
+import { Portal } from "./types";
 
 export interface Props {
-  componentKey: string;
   index: number;
-  data: PromisePortalComponent;
-  onError(key: string, error: Error, info: ErrorInfo): void;
-  onCancel(key: string): void;
-  onComplete(key: string, data: object): void;
+  data: Portal;
 }
 
 interface State {
@@ -24,35 +20,36 @@ class PromiseComponent extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
-    const { componentKey, onError } = this.props;
+    const { onError } = this.props.data;
     this.setState({ hasErrors: true }, () => {
-      onError(componentKey, error, info);
+      onError(error, info);
     });
   }
 
-  handleCancel = (): void => {
-    const { onCancel, componentKey } = this.props;
-    onCancel(componentKey);
-  }
-
-  handleComplete = (): void => {
-    const { onComplete, componentKey, data } = this.props;
-    onComplete(componentKey, data);
-  }
-
   render(): ReactNode {
-    const { data, index, onCancel, onComplete } = this.props;
+    const {
+      data: {
+        Component,
+        forceShow,
+        open,
+        props,
+        onCancel,
+        onComplete,
+        onRequestClose
+      },
+      index,
+    } = this.props;
     const { hasErrors } = this.state;
 
-    if (hasErrors || (index > 0 && !data.forceShow)) return null;
-
-    const { Component, props } = data;
+    if (hasErrors || (index > 0 && !forceShow)) return null;
 
     return (
       <Component
         {...props}
         cancel={onCancel}
         complete={onComplete}
+        open={open}
+        requestClose={onRequestClose}
       />
     );
   }
