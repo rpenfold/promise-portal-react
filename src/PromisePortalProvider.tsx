@@ -28,7 +28,7 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
 
   singleton.show = useCallback((
     component: ComponentType<unknown> | string,
-    config: PortalConfig
+    config: PortalConfig = {}
   ): Promise<PromiseComponentResult> => {
       const id = count.current++;
 
