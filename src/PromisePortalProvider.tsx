@@ -5,7 +5,8 @@ import ComponentRegistry from './ComponentRegistry';
 import { Portal, PortalConfig, PromisePortalProviderProps as Props, PromiseComponentResult, PromisePortalActions } from './types';
 
 export const singleton: PromisePortalActions = {
-  show: () => new Promise((resolve, reject) => reject('No provider found')),
+  show: () => new Promise((_resolve, reject) => reject('No provider found')),
+  clear: () => new Promise((_resolve, reject) => reject('No provider found')),
 };
 
 const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
@@ -44,7 +45,7 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
             Component,
             open: true,
             ...config,
-            onCancel: (data: unknown): void => {
+            onCancel: (data?: unknown): void => {
               reject({ cancelled: true, data });
               removeComponent(id);
             },
@@ -63,6 +64,10 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     },
     [],
   );
+
+  singleton.clear = useCallback(() => {
+    components.forEach(component => component.onCancel());
+  }, []);
 
   return (
     <PromisePortalContext.Provider value={singleton}>

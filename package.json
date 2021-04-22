@@ -1,10 +1,11 @@
 {
   "name": "@lyv/react-promise-portal",
-  "version": "0.1.5-alpha",
+  "version": "0.1.6-alpha",
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "start": "tsc --watch",
     "lint": "eslint .",
     "prepublish": "npm run build",
     "test": "jest",
@@ -27,14 +28,12 @@
   },
   "homepage": "https://github.com/rpenfold/react-promise-portal#readme",
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "*"
   },
   "devDependencies": {
     "@types/enzyme": "3.10.5",
     "@types/jest": "25.2.1",
     "@types/react": "16.9.34",
-    "@types/react-dom": "16.9.6",
     "@typescript-eslint/eslint-plugin": "2.29.0",
     "@typescript-eslint/parser": "2.29.0",
     "codecov": "3.7.1",
@@ -43,8 +42,6 @@
     "eslint": "6.8.0",
     "eslint-plugin-react": "7.19.0",
     "jest": "25.4.0",
-    "react": "*",
-    "react-dom": "*",
     "ts-jest": "25.4.0",
     "typescript": "3.8.3"
   }

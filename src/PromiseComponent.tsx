@@ -1,4 +1,4 @@
-import React, { ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Portal } from "./types";
 
 export interface Props {
@@ -10,7 +10,7 @@ interface State {
   hasErrors: boolean;
 }
 
-class PromiseComponent extends React.Component<Props, State> {
+class PromiseComponent extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 

@@ -31,6 +31,7 @@ export interface PromiseComponentProps {
 
 export interface PromisePortalActions {
   show(component: ComponentType<unknown>, config: PortalConfig): Promise<PromiseComponentResult>;
+  clear(): void;
 }
 
 export interface Portal<P = unknown> {
@@ -47,7 +48,7 @@ export interface Portal<P = unknown> {
   /** Callback for resolving the promise */
   onComplete(data: unknown): void;
   /** Callback for rejecting the promise */
-  onCancel(data: unknown): void;
+  onCancel(data?: unknown): void;
   /** Callback for when an error is thrown in the component */
   onError(error: Error, errorInfo: ErrorInfo): void;
   /** Callback that sets `open` to false to facilitate close animations */
