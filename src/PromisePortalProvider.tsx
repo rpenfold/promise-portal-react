@@ -46,7 +46,7 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
             open: true,
             ...config,
             onCancel: (data?: unknown): void => {
-              reject({ cancelled: true, data });
+              resolve({ cancelled: true, data });
               removeComponent(id);
             },
             onComplete: (data: unknown): void => {
