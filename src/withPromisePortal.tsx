@@ -2,17 +2,13 @@ import React, { ComponentType, ReactNode } from 'react';
 import PromisePortalContext from './PromisePortalContext';
 import { PromisePortalActions } from './types';
 
-interface Props {
-  promisePortal: PromisePortalActions;
-}
-
-// TODO: figure out how to disallow null for context
-function withPromisePortal<P extends Props>(WrappedComponent: ComponentType<P>): ReactNode {
-  function wrapComponent(props: P): ReactNode {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function withPromisePortal<Passed>(WrappedComponent: ComponentType<any>): ComponentType<Passed> {
+  const wrapComponent: React.FC<Passed> = (props: Passed) => {
     return (
       <PromisePortalContext.Consumer>
         {(context: PromisePortalActions | null): ReactNode =>
-          <WrappedComponent {...props} promisePortal={context as PromisePortalActions} />
+          <WrappedComponent {...props as Passed} {...context as PromisePortalActions} />
         }
       </PromisePortalContext.Consumer>
     );
@@ -20,7 +16,7 @@ function withPromisePortal<P extends Props>(WrappedComponent: ComponentType<P>):
 
   wrapComponent.displayName = `WithPromisePortal(${WrappedComponent.displayName})`;
 
-  return wrapComponent
+  return wrapComponent;
 }
 
 export default withPromisePortal;

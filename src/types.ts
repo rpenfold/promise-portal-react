@@ -1,17 +1,14 @@
 import { ComponentType, ErrorInfo, ReactNode } from "react";
 
-export interface PortalConfig {
-  /** Whether to force the component to be shown even if it's not at the front of the queue */
-  forceShow?: boolean;
-  /** Props to inject into the promise component */
-  props?: Record<string, unknown>;
-}
+export type ComponentParam = ComponentType<unknown> | ReactNode | string;
 
-export interface PromiseComponentResult {
+export type ComponentProps = Record<string, unknown>;
+
+export interface PromiseComponentResult<T = Record<string, unknown>> {
   /** Whether the promise component was cancelled */
   cancelled: boolean;
   /** Data payload from the promise component */
-  data?: unknown;
+  data?: T;
   /** Error caught by the promise component */
   error?: Error;
   /** Info related to an error caught by the promise component */
@@ -30,7 +27,10 @@ export interface PromiseComponentProps {
 }
 
 export interface PromisePortalActions {
-  show(component: ComponentType<unknown>, config: PortalConfig): Promise<PromiseComponentResult>;
+  showPortalAsync<T = unknown>(
+    component: ComponentParam,
+    props?: ComponentProps
+  ): Promise<PromiseComponentResult<T>>;
   clear(): void;
 }
 

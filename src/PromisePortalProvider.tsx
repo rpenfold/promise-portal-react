@@ -1,13 +1,16 @@
-import React, { ErrorInfo, useCallback, ComponentType } from 'react';
+import React, { ErrorInfo, useCallback } from 'react';
 import PromisePortalContext from './PromisePortalContext';
 import PromiseComponent from './PromiseComponent';
 import ComponentRegistry from './ComponentRegistry';
-import { Portal, PortalConfig, PromisePortalProviderProps as Props, PromiseComponentResult, PromisePortalActions } from './types';
+import {
+  Portal,
+  PromisePortalProviderProps as Props,
+  PromiseComponentResult,
+  ComponentParam,
+  ComponentProps,
+} from './types';
+import Dispatcher from './Dispatcher';
 
-export const singleton: PromisePortalActions = {
-  show: () => new Promise((_resolve, reject) => reject('No provider found')),
-  clear: () => new Promise((_resolve, reject) => reject('No provider found')),
-};
 
 const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   const [components, setComponents] = React.useState<Array<Portal>>([]);
@@ -27,10 +30,10 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     }))
   }, []);
 
-  singleton.show = useCallback((
-    component: ComponentType<unknown> | string,
-    config: PortalConfig = {}
-  ): Promise<PromiseComponentResult> => {
+  const showPortalAsync = useCallback(<T,>(
+    component: ComponentParam,
+    props: ComponentProps = {}
+  ): Promise<PromiseComponentResult<T>> => {
       const id = count.current++;
 
       const Component = typeof component === 'string'
@@ -44,12 +47,13 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
             id,
             Component,
             open: true,
-            ...config,
-            onCancel: (data?: unknown): void => {
+            props,
+            forceShow: true,
+            onCancel: (data?: T): void => {
               resolve({ cancelled: true, data });
               removeComponent(id);
             },
-            onComplete: (data: unknown): void => {
+            onComplete: (data?: T): void => {
               resolve({ cancelled: false, data });
               removeComponent(id);
             },
@@ -65,12 +69,17 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     [],
   );
 
-  singleton.clear = useCallback(() => {
+  const clear = useCallback(() => {
     components.forEach(component => component.onCancel());
   }, []);
 
+  const actions = {
+    showPortalAsync,
+    clear
+  };
+
   return (
-    <PromisePortalContext.Provider value={singleton}>
+    <PromisePortalContext.Provider value={actions}>
       {children}
       {components.map((component, index) => {
         return (
@@ -81,6 +90,7 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
           />
         );
       })}
+      <Dispatcher {...actions} />
     </PromisePortalContext.Provider>
   );
 };
