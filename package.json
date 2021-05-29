@@ -31,6 +31,7 @@
     "react": "*"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "7.0.0",
     "@types/enzyme": "3.10.5",
     "@types/jest": "25.2.1",
     "@types/react": "16.9.34",
@@ -42,7 +43,9 @@
     "eslint": "6.8.0",
     "eslint-plugin-react": "7.19.0",
     "jest": "25.4.0",
+    "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-test-renderer": "16.13.1",
     "ts-jest": "25.4.0",
     "typescript": "3.8.3"
   }
