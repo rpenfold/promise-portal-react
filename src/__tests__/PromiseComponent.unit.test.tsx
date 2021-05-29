@@ -1,17 +1,24 @@
 import React, { ComponentType } from "react";
 import { shallow, ShallowWrapper } from "enzyme";
-import PromiseComponent,
-{ Props as InternalPromiseComponentProps }
-  from "../PromiseComponent";
+import PromiseComponent, {
+  Props as InternalPromiseComponentProps,
+} from "../PromiseComponent";
 import { PromiseComponentProps, Portal } from "../types";
 
-class MockComponent extends React.Component { }
-type Wrapper = ShallowWrapper<InternalPromiseComponentProps, null, PromiseComponent>
-interface PropsFactoryInput { index?: number; data?: Partial<Portal> }
+class MockComponent extends React.Component {}
+type Wrapper = ShallowWrapper<
+  InternalPromiseComponentProps,
+  null,
+  PromiseComponent
+>;
+interface PropsFactoryInput {
+  index?: number;
+  data?: Partial<Portal>;
+}
 
 const getProps = ({
   index = 0,
-  data = {}
+  data = {},
 }: PropsFactoryInput = {}): InternalPromiseComponentProps => ({
   data: {
     Component: MockComponent as ComponentType<PromiseComponentProps>,
@@ -22,7 +29,7 @@ const getProps = ({
     id: 123,
     open: true,
     forceShow: false,
-    ...data
+    ...data,
   },
   index,
 });
@@ -52,7 +59,7 @@ describe("<PromiseComponent/>", () => {
     });
 
     it("renders if not at the bottom of the stack but is force shown", () => {
-      props = getProps({ index: 1, data: { forceShow: true } })
+      props = getProps({ index: 1, data: { forceShow: true } });
       wrapper.setProps(props);
       expect(wrapper.isEmptyRender()).toBe(false);
     });
@@ -62,17 +69,17 @@ describe("<PromiseComponent/>", () => {
     it("invokes onError callback", () => {
       const error = new Error("mock_error");
       wrapper.simulateError(error);
-      expect(props.data.onError).toBeCalledWith(error, expect.anything())
+      expect(props.data.onError).toBeCalledWith(error, expect.anything());
     });
 
     it("sets state.hasErrors to be true", () => {
       wrapper.simulateError(new Error());
-      expect(wrapper.state('hasErrors')).toBe(true);
+      expect(wrapper.state("hasErrors")).toBe(true);
     });
 
     it("does not render after error is caught", () => {
       wrapper.simulateError(new Error());
       expect(wrapper.isEmptyRender()).toBe(true);
-    })
+    });
   });
 });

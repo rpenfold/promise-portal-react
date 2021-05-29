@@ -15,7 +15,7 @@ class PromiseComponent extends Component<Props, State> {
     super(props);
 
     this.state = {
-      hasErrors: false
+      hasErrors: false,
     };
   }
 
@@ -35,7 +35,7 @@ class PromiseComponent extends Component<Props, State> {
         props,
         onCancel,
         onComplete,
-        onRequestClose
+        onRequestClose,
       },
       index,
     } = this.props;

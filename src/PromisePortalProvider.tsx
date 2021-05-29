@@ -1,47 +1,50 @@
-import React, { ErrorInfo, useCallback } from 'react';
-import PromisePortalContext from './PromisePortalContext';
-import PromiseComponent from './PromiseComponent';
-import ComponentRegistry from './ComponentRegistry';
+import React, { ErrorInfo, useCallback } from "react";
+import PromisePortalContext from "./PromisePortalContext";
+import PromiseComponent from "./PromiseComponent";
+import ComponentRegistry from "./ComponentRegistry";
 import {
   Portal,
   PromisePortalProviderProps as Props,
   PromiseComponentResult,
   ComponentParam,
   ComponentProps,
-} from './types';
-import Dispatcher from './Dispatcher';
-
+} from "./types";
+import Dispatcher from "./Dispatcher";
 
 const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   const [components, setComponents] = React.useState<Array<Portal>>([]);
   const count = React.useRef(0);
 
-  const removeComponent = useCallback(id => {
-    setComponents(components.filter(x => x.id !== id));
+  const removeComponent = useCallback((id) => {
+    setComponents(components.filter((x) => x.id !== id));
   }, []);
 
-  const requestCloseComponent = useCallback(id => {
-    setComponents(components.map(x => {
-      if (x.id === id) {
-        x.open = false;
-      }
+  const requestCloseComponent = useCallback((id) => {
+    setComponents(
+      components.map((x) => {
+        if (x.id === id) {
+          x.open = false;
+        }
 
-      return x;
-    }))
+        return x;
+      })
+    );
   }, []);
 
-  const showPortalAsync = useCallback(<T,>(
-    component: ComponentParam,
-    props: ComponentProps = {}
-  ): Promise<PromiseComponentResult<T>> => {
+  const showPortalAsync = useCallback(
+    <T,>(
+      component: ComponentParam,
+      props: ComponentProps = {}
+    ): Promise<PromiseComponentResult<T>> => {
       const id = count.current++;
 
-      const Component = typeof component === 'string'
-        ? ComponentRegistry.find(component)
-        : component;
+      const Component =
+        typeof component === "string"
+          ? ComponentRegistry.find(component)
+          : component;
 
       return new Promise((resolve, reject) => {
-        setComponents(components => [
+        setComponents((components) => [
           ...components,
           {
             id,
@@ -66,16 +69,16 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         ]);
       });
     },
-    [],
+    []
   );
 
   const clear = useCallback(() => {
-    components.forEach(component => component.onCancel());
+    components.forEach((component) => component.onCancel());
   }, []);
 
   const actions = {
     showPortalAsync,
-    clear
+    clear,
   };
 
   return (
@@ -83,11 +86,7 @@ const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
       {children}
       {components.map((component, index) => {
         return (
-          <PromiseComponent
-            key={component.id}
-            index={index}
-            data={component}
-          />
+          <PromiseComponent key={component.id} index={index} data={component} />
         );
       })}
       <Dispatcher {...actions} />
