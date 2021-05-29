@@ -5,7 +5,6 @@ module.exports = {
   setupFiles: [
     "./config/testSetup.js"
   ],
-  
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*",
