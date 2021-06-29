@@ -21,5 +21,8 @@ module.exports = {
   },
   modulePathIgnorePatterns: [
     "dist"
+  ],
+  testPathIgnorePatterns: [
+    "mockPortal"
   ]
 };
