@@ -3,7 +3,7 @@
 ![Tests](https://github.com/rpenfold/react-promise-portal/workflows/Test/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/764ac4b03e3340e39a9041ba50fb7727)](https://app.codacy.com/manual/rpenfold/react-promise-portal?utm_source=github.com&utm_medium=referral&utm_content=rpenfold/react-promise-portal&utm_campaign=Badge_Grade_Dashboard)
 [![codecov](https://codecov.io/gh/rpenfold/react-promise-portal/branch/master/graph/badge.svg)](https://codecov.io/gh/rpenfold/react-promise-portal)
-[![npm version](https://badge.fury.io/js/%40lyv%2Freact-promise-portal.svg)](https://badge.fury.io/js/%40lyv%2Freact-promise-portal)
+[![npm version](https://badge.fury.io/js/promise-portal-react.svg)](https://badge.fury.io/js/promise-portal-react)
 
 Modals in React are difficult for a couple main reasons. (1) They require a lot of boilerplate to set up, and (2) they are typically "fire and forget", so the caller cannot know what was the result of the user's interaction with the modal. PromisePortal solves these problems, and more.
 
