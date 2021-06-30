@@ -9,20 +9,21 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*",
     "!node_modules/**",
-    "!dist/**"
+    "!dist/**",
+    "!src/PromisePortalProvider/__tests__/mockPortal.ts",
   ],
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100
-    }
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 100,
+  //     functions: 100,
+  //     lines: 100,
+  //     statements: 100
+  //   }
+  // },
   modulePathIgnorePatterns: [
     "dist"
   ],
   testPathIgnorePatterns: [
-    "mockPortal"
+    "src/PromisePortalProvider/__tests__/mockPortal.ts"
   ]
 };
