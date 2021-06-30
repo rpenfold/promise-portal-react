@@ -7,7 +7,7 @@
     "build": "rm -rf ./dist && tsc",
     "start": "tsc --watch",
     "lint": "eslint .",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write src"
