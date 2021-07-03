@@ -1,6 +1,6 @@
 import { ErrorInfo } from "react";
 import { ComponentProps, Portal, PortalComponentType, PromiseComponentResult } from "types";
-import generateSimpleUniqueId from "utils/simpleUniqueId";
+import generateSimpleUniqueId from "../utils/simpleUniqueId";
 import { ProviderInternalContext } from "./types";
 
 /**
