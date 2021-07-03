@@ -2,15 +2,15 @@ import React, { ComponentType, ReactNode } from "react";
 import PromisePortalContext from "./PromisePortalContext";
 import { PromisePortalActions } from "./types";
 
-function withPromisePortal<Passed>(
-  WrappedComponent: ComponentType<any> // eslint-disable-line @typescript-eslint/no-explicit-any
-): ComponentType<Passed> {
-  const wrapComponent: React.FC<Passed> = (props: Passed) => {
+function withPromisePortal<PassedProps>(
+  WrappedComponent: ComponentType<PassedProps & PromisePortalActions>
+): ComponentType<PassedProps> {
+  const wrapComponent: React.FC<PassedProps> = (props: PassedProps) => {
     return (
       <PromisePortalContext.Consumer>
         {(context: PromisePortalActions | null): ReactNode => (
           <WrappedComponent
-            {...(props as Passed)}
+            {...(props as PassedProps)}
             {...(context as PromisePortalActions)}
           />
         )}
