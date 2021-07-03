@@ -1,4 +1,8 @@
-import PromisePortal, { ComponentRegistry, usePromisePortal, withPromisePortal } from "..";
+import PromisePortal, {
+  ComponentRegistry,
+  usePromisePortal,
+  withPromisePortal,
+} from "..";
 
 describe("index", () => {
   it("PromisePortal export works correctly", () => {

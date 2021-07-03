@@ -1,5 +1,5 @@
-import React from 'react';
-import { Portal } from '../../types';
+import React from "react";
+import { Portal } from "../../types";
 
 export default function getMockPortal(id: string) {
   return {

@@ -1,1 +1,1 @@
-export { default } from './PromisePortalProvider';
+export { default } from "./PromisePortalProvider";

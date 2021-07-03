@@ -26,7 +26,7 @@ const getProps = ({
     onComplete: jest.fn(),
     onError: jest.fn(),
     onRequestClose: jest.fn(),
-    id: '123',
+    id: "123",
     open: true,
     forceShow: false,
     ...data,

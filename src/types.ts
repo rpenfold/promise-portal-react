@@ -4,7 +4,9 @@ export type ComponentParam = ComponentType<unknown> | ReactNode | string;
 
 export type ComponentProps = Record<string, unknown>;
 
-export type PortalComponentType = ComponentType<PromiseComponentProps & ComponentProps>;
+export type PortalComponentType = ComponentType<
+  PromiseComponentProps & ComponentProps
+>;
 
 export interface PromiseComponentResult<T = Record<string, unknown>> {
   /** Whether the promise component was cancelled */

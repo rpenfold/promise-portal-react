@@ -15,9 +15,9 @@ import {
   addPortalUpdater,
   removePortalByIdUpdater,
   modifyPortalByIdUpdater,
-} from './updaters';
+} from "./updaters";
 import Dispatcher from "../Dispatcher";
-import { buildAwaitablePortal } from './portalFactory';
+import { buildAwaitablePortal } from "./portalFactory";
 import { ProviderInternalContext } from "./types";
 
 /**
@@ -32,16 +32,19 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   const [portals, setPortals] = useState<Array<Portal>>([]);
 
   const removePortal = useCallback(
-    composeUpdater<[id: string]>(setPortals, removePortalByIdUpdater)
-  , []);
+    composeUpdater<[id: string]>(setPortals, removePortalByIdUpdater),
+    []
+  );
 
   const requestClosePortal = useCallback(
-    composeUpdater<[id: string]>(setPortals, modifyPortalByIdUpdater({ open: false }))
-  , []);
+    composeUpdater<[id: string]>(
+      setPortals,
+      modifyPortalByIdUpdater({ open: false })
+    ),
+    []
+  );
 
-  const clear = useCallback(
-    clearPortals(portals)
-  , [portals]);
+  const clear = useCallback(clearPortals(portals), [portals]);
 
   const internalContext: ProviderInternalContext = {
     removePortal,
@@ -54,13 +57,18 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
       component: ComponentParam,
       props: ComponentProps = {}
     ): Promise<PromiseComponentResult<T>> => {
-      const Component = (typeof component === "string"
-        ? ComponentRegistry.find(component)
-        : component
+      const Component = (
+        typeof component === "string"
+          ? ComponentRegistry.find(component)
+          : component
       ) as PortalComponentType;
 
       return new Promise((resolve, reject) => {
-        const portal = buildAwaitablePortal<T>(resolve, reject)(Component, props, internalContext) as Portal;
+        const portal = buildAwaitablePortal<T>(resolve, reject)(
+          Component,
+          props,
+          internalContext
+        ) as Portal;
 
         setPortals(addPortalUpdater(portal));
       });
@@ -77,9 +85,7 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     <PromisePortalContext.Provider value={actions}>
       {children}
       {portals.map((portal, index) => {
-        return (
-          <PromiseComponent key={portal.id} index={index} data={portal} />
-        );
+        return <PromiseComponent key={portal.id} index={index} data={portal} />;
       })}
       <Dispatcher {...actions} />
     </PromisePortalContext.Provider>

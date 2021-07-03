@@ -1,15 +1,26 @@
 import { ErrorInfo } from "react";
-import { ComponentProps, Portal, PortalComponentType, PromiseComponentResult } from "types";
+import {
+  ComponentProps,
+  Portal,
+  PortalComponentType,
+  PromiseComponentResult,
+} from "types";
 import generateSimpleUniqueId from "../utils/simpleUniqueId";
 import { ProviderInternalContext } from "./types";
 
 /**
  * Builds a portal that can be awaited.
  */
- export const buildAwaitablePortal =  <T,>(
-    resolve: (value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>) => void,
-    reject: (value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>) => void,
-  ) => (
+export const buildAwaitablePortal =
+  <T>(
+    resolve: (
+      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>
+    ) => void,
+    reject: (
+      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>
+    ) => void
+  ) =>
+  (
     Component: PortalComponentType,
     props: ComponentProps,
     context: ProviderInternalContext

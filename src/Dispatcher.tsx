@@ -9,7 +9,7 @@ import {
 /**
  * Dispatcher is a utility that exposes promise-portal functionality to outside
  * React components.
- * 
+ *
  * @invariant singleton instance is always mounted as long as the provider is mounted
  */
 class Dispatcher extends Component<PromisePortalActions> {
