@@ -1,5 +1,3 @@
-# react-promise-portal
-
 ![Tests](https://github.com/rpenfold/react-promise-portal/workflows/Test/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/764ac4b03e3340e39a9041ba50fb7727)](https://app.codacy.com/manual/rpenfold/react-promise-portal?utm_source=github.com&utm_medium=referral&utm_content=rpenfold/react-promise-portal&utm_campaign=Badge_Grade_Dashboard)
 [![codecov](https://codecov.io/gh/rpenfold/react-promise-portal/branch/master/graph/badge.svg)](https://codecov.io/gh/rpenfold/react-promise-portal)
