@@ -9,6 +9,8 @@ import {
 /**
  * Dispatcher is a utility that exposes promise-portal functionality to outside
  * React components.
+ * 
+ * @invariant singleton instance is always mounted as long as the provider is mounted
  */
 class Dispatcher extends Component<PromisePortalActions> {
   private static instance: Dispatcher;
@@ -18,11 +20,11 @@ class Dispatcher extends Component<PromisePortalActions> {
     Dispatcher.instance = this;
   }
 
-  static showPortalAsync = <T,>(
+  static showPortalAsync = async <T,>(
     component: ComponentParam,
-    props: ComponentProps
+    props?: ComponentProps
   ): Promise<PromiseComponentResult<T>> => {
-    return Dispatcher.instance.props.showPortalAsync<T>(component, props);
+    return await Dispatcher.instance.props.showPortalAsync<T>(component, props);
   };
 
   static clear = (): void => {
@@ -30,11 +32,7 @@ class Dispatcher extends Component<PromisePortalActions> {
   };
 
   render(): ReactNode {
-    if (!Dispatcher.instance) {
-      Dispatcher.instance = this;
-    }
-
-    return <React.Fragment />;
+    return null;
   }
 }
 
