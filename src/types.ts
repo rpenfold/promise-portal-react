@@ -37,8 +37,12 @@ export interface PromisePortalActions {
 }
 
 export interface Portal<T = unknown> {
-  /** An internal unique identifier for accessing the component */
-  id: number;
+  /**
+   * An internal unique identifier for accessing the component. Uses a unique string id rather
+   * than an incrementing count-based id solely for convenience of generating portal id outside
+   * of React component.
+   * */
+  id: string;
   /** The React component to be rendered */
   Component: PortalComponentType;
   /** Whether to force the component to be shown even if it's not at the front of the queue */

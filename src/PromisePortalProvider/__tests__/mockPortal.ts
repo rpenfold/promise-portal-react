@@ -1,7 +1,7 @@
 import React from 'react';
 import { Portal } from '../../types';
 
-export default function getMockPortal(id: number) {
+export default function getMockPortal(id: string) {
   return {
     id,
     Component: React.Component,

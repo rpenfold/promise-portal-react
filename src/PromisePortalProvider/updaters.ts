@@ -32,7 +32,7 @@ export const addPortalUpdater = (portal: Portal) =>
 /**
  * Updater for removing a portal from the stack by id.
  */
-export const removePortalByIdUpdater = (id: number) =>
+export const removePortalByIdUpdater = (id: string) =>
   (portals: Array<Portal>) =>
     portals.filter((portal) => portal.id !== id);
 
@@ -40,6 +40,6 @@ export const removePortalByIdUpdater = (id: number) =>
  * Creates an updater that applies a specified change to a portal by id
  */
 export const modifyPortalByIdUpdater = (changes: Partial<Portal>) =>
-  (id: number) =>
+  (id: string) =>
     (portals: Array<Portal>) =>
       portals.map((portal) => (portal.id === id) ? { ...portal, ...changes } : portal);
