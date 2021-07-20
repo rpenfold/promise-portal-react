@@ -18,7 +18,8 @@ function withPromisePortal<PassedProps>(
     );
   };
 
-  wrapComponent.displayName = `WithPromisePortal(${WrappedComponent.displayName})`;
+  const name = WrappedComponent.displayName ?? WrappedComponent.name ?? "Component";
+  wrapComponent.displayName = `WithPromisePortal(${name})`;
 
   return wrapComponent;
 }
