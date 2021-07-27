@@ -5,6 +5,7 @@ import {
   PromisePortalActions,
   PromiseComponentResult,
 } from "types";
+import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
 /**
  * Dispatcher is a utility that exposes promise-portal functionality to outside
@@ -27,8 +28,8 @@ class Dispatcher extends Component<PromisePortalActions> {
     return await Dispatcher.instance.props.showPortalAsync<T>(component, props);
   };
 
-  static clear = (): void => {
-    Dispatcher.instance.props.clear();
+  static clear = (predicate?: MatchPortalPredicate): void => {
+    Dispatcher.instance.props.clear(predicate);
   };
 
   render(): ReactNode {
