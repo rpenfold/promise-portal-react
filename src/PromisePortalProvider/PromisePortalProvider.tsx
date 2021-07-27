@@ -18,14 +18,18 @@ import {
 } from "./updaters";
 import Dispatcher from "../Dispatcher";
 import { buildAwaitablePortal } from "./portalFactory";
-import { ProviderInternalContext } from "./types";
+import { ProviderInternalContext, MatchPortalPredicate } from "./types";
 
 /**
  * Removes all components. Iterates across all existing components and cancels them individually. This
  * allows for proper cleanup.
  */
-export const clearPortals = (portals: Array<Portal>) => () => {
-  portals.forEach((portal) => portal.onCancel());
+export const clearPortals = (portals: Array<Portal>) => (predicate?: MatchPortalPredicate) => {
+  portals.forEach((portal) => {
+    if (!predicate || predicate(portal.Component.name, portal.props)) {
+      portal.onCancel()
+    }
+  });
 };
 
 export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
