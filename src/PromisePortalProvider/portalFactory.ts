@@ -1,4 +1,4 @@
-import { ErrorInfo } from "react";
+import { ErrorInfo, RefObject } from "react";
 import {
   ComponentProps,
   Portal,
@@ -47,3 +47,30 @@ export const buildAwaitablePortal =
       onRequestClose: (): void => context.requestClosePortal(id),
     };
   };
+
+export const buildPortal = (forwardRef: RefObject<unknown>) => (
+  Component: PortalComponentType,
+  props: ComponentProps,
+  context: ProviderInternalContext
+) => {
+  const id = generateSimpleUniqueId();
+  return {
+    id,
+    Component,
+    open: true,
+    props,
+    forceShow: true,
+    forwardRef,
+    onCancel: (): void => {
+      context.removePortal(id);
+    },
+    onComplete: (): void => {
+      context.removePortal(id);
+    },
+    onError: (error: Error, errorInfo: ErrorInfo): void => {
+      context.removePortal(id);
+      throw error;
+    },
+    onRequestClose: (): void => context.requestClosePortal(id),
+  };
+}

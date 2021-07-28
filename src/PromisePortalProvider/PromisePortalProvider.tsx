@@ -17,7 +17,7 @@ import {
   modifyPortalByIdUpdater,
 } from "./updaters";
 import Dispatcher from "../Dispatcher";
-import { buildAwaitablePortal } from "./portalFactory";
+import { buildAwaitablePortal, buildPortal } from "./portalFactory";
 import { ProviderInternalContext, MatchPortalPredicate } from "./types";
 import getComponentName from "../utils/getComponentName";
 
@@ -81,8 +81,29 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     []
   );
 
+  const showPortal = (
+    component: ComponentParam,
+    props: ComponentProps = {}
+  ) => {
+    const Component = (
+      typeof component === "string"
+        ? ComponentRegistry.find(component)
+        : component
+    ) as PortalComponentType;
+    const forwardRef = React.createRef();
+    const portal = buildPortal(forwardRef)(
+      Component,
+      props,
+      internalContext
+    );
+
+    setPortals(addPortalUpdater(portal));
+    return forwardRef;
+  }
+
   const actions = {
     showPortalAsync,
+    showPortal,
     clear,
   };
 

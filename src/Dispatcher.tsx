@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { Component, ReactNode, RefObject } from "react";
 import {
   ComponentParam,
   ComponentProps,
@@ -19,6 +19,13 @@ class Dispatcher extends Component<PromisePortalActions> {
   constructor(props: PromisePortalActions) {
     super(props);
     Dispatcher.instance = this;
+  }
+
+  static showPortal = (
+    component: ComponentParam,
+    props?: ComponentProps
+  ): RefObject<unknown> => {
+    return Dispatcher.instance.props.showPortal(component, props);
   }
 
   static showPortalAsync = async <T,>(

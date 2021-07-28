@@ -1,4 +1,4 @@
-import { ComponentType, ErrorInfo, ReactNode } from "react";
+import { ComponentType, ErrorInfo, ReactNode, RefObject } from "react";
 import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
 export type ComponentParam = ComponentType<unknown> | ReactNode | string;
@@ -32,6 +32,7 @@ export interface PromiseComponentProps<T = unknown> {
 }
 
 export interface PromisePortalActions {
+  showPortal(component: ComponentParam, props?: ComponentProps): RefObject<unknown>;
   showPortalAsync<T = unknown>(
     component: ComponentParam,
     props?: ComponentProps
@@ -50,6 +51,8 @@ export interface Portal<T = unknown> {
   Component: PortalComponentType;
   /** Whether to force the component to be shown even if it's not at the front of the queue */
   forceShow?: boolean;
+  /** Forward ref to expose inner component to caller when using synchronously */
+  forwardRef?: RefObject<unknown>;
   /** A convenience prop for triggering open/close animations */
   open: boolean;
   /** Props to be passed down to component */

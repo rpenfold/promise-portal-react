@@ -9,6 +9,7 @@ export { default as withPromisePortal } from "./withPromisePortal";
 
 const promisePortal = {
   clear: Dispatcher.clear,
+  showPortal: Dispatcher.showPortal,
   showPortalAsync: Dispatcher.showPortalAsync,
   Provider: PromisePortalProvider,
 };

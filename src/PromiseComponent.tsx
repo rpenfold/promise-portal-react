@@ -31,6 +31,7 @@ class PromiseComponent extends Component<Props, State> {
       data: {
         Component,
         forceShow,
+        forwardRef,
         open,
         props,
         onCancel,
@@ -50,6 +51,7 @@ class PromiseComponent extends Component<Props, State> {
         complete={onComplete}
         open={open}
         requestClose={onRequestClose}
+        ref={forwardRef}
       />
     );
   }
