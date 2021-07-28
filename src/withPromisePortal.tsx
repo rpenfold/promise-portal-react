@@ -3,7 +3,7 @@ import PromisePortalContext from "./PromisePortalContext";
 import { PromisePortalActions } from "./types";
 
 function withPromisePortal<PassedProps>(
-  WrappedComponent: ComponentType<PassedProps>
+  WrappedComponent: ComponentType<PassedProps & PromisePortalActions>
 ): ComponentType<PassedProps> {
   const wrapComponent: React.FC<PassedProps> = (props: PassedProps) => {
     return (
