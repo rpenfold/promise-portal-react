@@ -1,14 +1,20 @@
 import React from "react";
-import { Portal } from "../../types";
+import { Portal, PortalComponentType } from "../../types";
 
-export default function getMockPortal(id: string) {
-  return {
+export default function getMockPortal(id: string, componentName?: string) {
+  class MockComponent extends React.Component {
+    static displayName = componentName;
+  };
+
+  const portal = {
     id,
-    Component: React.Component,
+    Component: MockComponent as PortalComponentType,
     open: true,
     onComplete: jest.fn(),
     onCancel: jest.fn(),
     onError: jest.fn(),
     onRequestClose: jest.fn(),
   } as Portal;
+
+  return portal;
 }

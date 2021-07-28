@@ -19,6 +19,7 @@ import {
 import Dispatcher from "../Dispatcher";
 import { buildAwaitablePortal } from "./portalFactory";
 import { ProviderInternalContext, MatchPortalPredicate } from "./types";
+import getComponentName from "../utils/getComponentName";
 
 /**
  * Removes all components. Iterates across all existing components and cancels them individually. This
@@ -26,7 +27,7 @@ import { ProviderInternalContext, MatchPortalPredicate } from "./types";
  */
 export const clearPortals = (portals: Array<Portal>) => (predicate?: MatchPortalPredicate) => {
   portals.forEach((portal) => {
-    if (!predicate || predicate(portal.Component.name, portal.props)) {
+    if (!predicate || predicate(getComponentName(portal.Component), portal.props)) {
       portal.onCancel()
     }
   });

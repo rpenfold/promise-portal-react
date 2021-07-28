@@ -1,8 +1,9 @@
 import { ComponentType, ErrorInfo, ReactNode } from "react";
+import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
 export type ComponentParam = ComponentType<unknown> | ReactNode | string;
 
-export type ComponentProps = Record<string, unknown>;
+export type ComponentProps = Record<string, unknown> | undefined;
 
 export type PortalComponentType = ComponentType<
   PromiseComponentProps & ComponentProps
@@ -35,7 +36,7 @@ export interface PromisePortalActions {
     component: ComponentParam,
     props?: ComponentProps
   ): Promise<PromiseComponentResult<T>>;
-  clear(): void;
+  clear(predicate?: MatchPortalPredicate): void;
 }
 
 export interface Portal<T = unknown> {

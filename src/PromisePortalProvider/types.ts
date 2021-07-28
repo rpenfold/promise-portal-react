@@ -1,4 +1,4 @@
-import { Portal } from "types";
+import { ComponentProps, Portal } from "types";
 
 export type SetPortals = React.Dispatch<React.SetStateAction<Portal[]>>;
 
