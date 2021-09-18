@@ -14,6 +14,7 @@ const WrappedComponent = withPromisePortal<MockComponentProp>(React.Component);
 
 describe("withPromisePortal", () => {
   const mockContext: PromisePortalActions = {
+    showPortal: jest.fn(),
     showPortalAsync: jest.fn(),
     clear: jest.fn(),
   };

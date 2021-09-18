@@ -60,7 +60,7 @@ export interface Portal<T = unknown> {
   /** Callback for resolving the promise */
   onComplete(data?: T): void;
   /** Callback for rejecting the promise */
-  onCancel(data: T): void;
+  onCancel(data?: T): void;
   /** Callback for when an error is thrown in the component */
   onError(error: Error, errorInfo: ErrorInfo): void;
   /** Callback that sets `open` to false to facilitate close animations */

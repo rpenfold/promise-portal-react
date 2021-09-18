@@ -6,6 +6,7 @@ import { PromisePortalActions } from "../types";
 describe("<Dispatcher />", () => {
   const props: PromisePortalActions = {
     clear: jest.fn(),
+    showPortal: jest.fn(),
     showPortalAsync: jest.fn(),
   };
 
