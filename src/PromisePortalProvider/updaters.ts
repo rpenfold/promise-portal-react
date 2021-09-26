@@ -2,7 +2,9 @@ import { Portal } from "../types";
 
 export type SetPortals = React.Dispatch<React.SetStateAction<Portal[]>>;
 
-type PortalStateUpdater<T extends Array<unknown>> = (...params: T) => (portals: Array<Portal>) => Array<Portal>
+type PortalStateUpdater<T extends Array<unknown>> = (
+  ...params: T
+) => (portals: Array<Portal>) => Array<Portal>;
 
 /**
  * Composes an updater for modifying provider state. The main purpose of this is to increase testability
@@ -24,21 +26,26 @@ export function composeUpdater<T extends Array<unknown>>(
 /**
  * Updater for adding a portal to the top of the stack.
  */
-export const addPortalUpdater = (portal: Portal) => (portals: Array<Portal>): Array<Portal> =>
-  [...portals, portal];
+export const addPortalUpdater =
+  (portal: Portal) =>
+  (portals: Array<Portal>): Array<Portal> =>
+    [...portals, portal];
 
 /**
  * Updater for removing a portal from the stack by id.
  */
 export const removePortalByIdUpdater =
-  (id: string) => (portals: Array<Portal>): Array<Portal> =>
+  (id: string) =>
+  (portals: Array<Portal>): Array<Portal> =>
     portals.filter((portal) => portal.id !== id);
 
 /**
  * Creates an updater that applies a specified change to a portal by id
  */
 export const modifyPortalByIdUpdater =
-  (changes: Partial<Portal>) => (id: string) => (portals: Array<Portal>): Array<Portal> =>
+  (changes: Partial<Portal>) =>
+  (id: string) =>
+  (portals: Array<Portal>): Array<Portal> =>
     portals.map((portal) =>
       portal.id === id ? { ...portal, ...changes } : portal
     );

@@ -17,9 +17,10 @@ describe("PromisePortalProvider", () => {
     it("cancels only portals that match the predicate if provided", () => {
       const mockPortalA = getMockPortal("1", "ComponentA");
       const mockPortalB = getMockPortal("2", "ComponentB");
-      console.debug("***", mockPortalA.Component.displayName)
+      console.debug("***", mockPortalA.Component.displayName);
       const mockPortals = [mockPortalA, mockPortalB];
-      const mockPredicate: MatchPortalPredicate = (name) => name === "ComponentA";
+      const mockPredicate: MatchPortalPredicate = (name) =>
+        name === "ComponentA";
 
       clearPortals(mockPortals)(mockPredicate);
 

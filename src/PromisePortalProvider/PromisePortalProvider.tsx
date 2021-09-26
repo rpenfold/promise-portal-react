@@ -25,13 +25,18 @@ import getComponentName from "../utils/getComponentName";
  * Removes all components. Iterates across all existing components and cancels them individually. This
  * allows for proper cleanup.
  */
-export const clearPortals = (portals: Array<Portal>) => (predicate?: MatchPortalPredicate): void => {
-  portals.forEach((portal) => {
-    if (!predicate || predicate(getComponentName(portal.Component), portal.props)) {
-      portal.onCancel()
-    }
-  });
-};
+export const clearPortals =
+  (portals: Array<Portal>) =>
+  (predicate?: MatchPortalPredicate): void => {
+    portals.forEach((portal) => {
+      if (
+        !predicate ||
+        predicate(getComponentName(portal.Component), portal.props)
+      ) {
+        portal.onCancel();
+      }
+    });
+  };
 
 export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   const [portals, setPortals] = useState<Array<Portal>>([]);
@@ -91,15 +96,11 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         : component
     ) as PortalComponentType;
     const forwardRef = React.createRef();
-    const portal = buildPortal(forwardRef)(
-      Component,
-      props,
-      internalContext
-    );
+    const portal = buildPortal(forwardRef)(Component, props, internalContext);
 
     setPortals(addPortalUpdater(portal));
     return forwardRef;
-  }
+  };
 
   const actions = {
     showPortalAsync,

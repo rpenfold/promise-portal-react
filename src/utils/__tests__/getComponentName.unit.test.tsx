@@ -13,12 +13,14 @@ describe("getComponentName()", () => {
   });
 
   it("gets name if available", () => {
-    function MyComponent() { return <React.Fragment /> }
+    function MyComponent() {
+      return <React.Fragment />;
+    }
 
     expect(getComponentName(MyComponent)).toEqual(mockComponentName);
   });
 
-  it("falls back to \"Component\" if no other component name found", () => {
+  it('falls back to "Component" if no other component name found', () => {
     expect(getComponentName({} as ComponentType)).toEqual("Component");
   });
 });

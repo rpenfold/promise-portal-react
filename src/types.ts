@@ -32,7 +32,10 @@ export interface PromiseComponentProps<T = unknown> {
 }
 
 export interface PromisePortalActions {
-  showPortal(component: ComponentParam, props?: ComponentProps): RefObject<unknown>;
+  showPortal(
+    component: ComponentParam,
+    props?: ComponentProps
+  ): RefObject<unknown>;
   showPortalAsync<T = unknown>(
     component: ComponentParam,
     props?: ComponentProps

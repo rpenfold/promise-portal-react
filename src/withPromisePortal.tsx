@@ -1,4 +1,5 @@
 import React, { ComponentType, ReactNode } from "react";
+import getComponentName from "utils/getComponentName";
 import PromisePortalContext from "./PromisePortalContext";
 import { PromisePortalActions } from "./types";
 
@@ -18,8 +19,7 @@ function withPromisePortal<PassedProps>(
     );
   };
 
-  const name = WrappedComponent.displayName ?? WrappedComponent.name ?? "Component";
-  wrapComponent.displayName = `WithPromisePortal(${name})`;
+  wrapComponent.displayName = `WithPromisePortal(${getComponentName(WrappedComponent)})`;
 
   return wrapComponent;
 }
