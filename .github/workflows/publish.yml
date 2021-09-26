@@ -22,5 +22,3 @@ jobs:
         run: npm run build
       - name: Publish
         run: npm publish --access public
-      - name: Commit Changes
-        run: git add . && git commit -m "release ${GITHUB_REF##*/}" && git push
