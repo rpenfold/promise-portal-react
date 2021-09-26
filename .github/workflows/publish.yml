@@ -20,13 +20,19 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: Checkout Branch
         uses: actions/checkout@v2
-      - run: echo ${GITHUB_REF##*/}
+      - name: Package version
+        run: echo ${GITHUB_REF##*/}
+      - name: Node version
+        run: node -v
+      - name: NPM version
+        run: npm -v
       - name: Install Dependencies
         run: npm ci
       - name: Publish
