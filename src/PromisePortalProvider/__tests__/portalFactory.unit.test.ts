@@ -108,11 +108,15 @@ describe("portalFactory", () => {
     describe("portal.onError()", () => {
       it("throws error", () => {
         const mockError = new Error();
-        expect(() => portal.onError(mockError, {} as ErrorInfo)).toThrow(mockError);
+        expect(() => portal.onError(mockError, {} as ErrorInfo)).toThrow(
+          mockError
+        );
       });
 
       it("removes portal", () => {
-        expect(() => portal.onError(new Error(), {} as ErrorInfo)).toThrowError();
+        expect(() =>
+          portal.onError(new Error(), {} as ErrorInfo)
+        ).toThrowError();
         expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
       });
     });

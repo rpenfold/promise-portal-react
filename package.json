@@ -4,9 +4,9 @@
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
+    "build": "npm run lint && rm -rf ./dist && tsc",
     "start": "tsc --watch",
-    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0",
     "prepare": "npm run build",
     "test": "jest",
     "typecheck": "tsc --noEmit",

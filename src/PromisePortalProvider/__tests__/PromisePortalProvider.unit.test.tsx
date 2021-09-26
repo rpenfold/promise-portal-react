@@ -2,12 +2,12 @@ import React from "react";
 import { shallow } from "enzyme";
 import getMockPortal from "./mockPortal";
 import { withPromisePortal } from "../..";
-import { Portal, PromisePortalActions, } from "../../types";
+import { Portal, PromisePortalActions } from "../../types";
 import { MatchPortalPredicate } from "../types";
 import { clearPortals, PromisePortalProvider } from "../PromisePortalProvider";
 
 class BaseMockComponent extends React.Component {}
-const MockComponent = withPromisePortal<any>(BaseMockComponent);
+const MockComponent = withPromisePortal<any>(BaseMockComponent); // eslint-disable-line @typescript-eslint/no-explicit-any
 
 describe("PromisePortalProvider", () => {
   describe("<PromisePortalProvider />", () => {
@@ -17,16 +17,17 @@ describe("PromisePortalProvider", () => {
       </PromisePortalProvider>
     );
     const accessor = wrapper.dive().at(0).dive().dive();
-    const actions = accessor.props() as PromisePortalActions;
+    const { showPortal, showPortalAsync } =
+      accessor.props() as PromisePortalActions;
 
     it("showPortalAsync does not throw an error", () => {
-      expect(() => actions.showPortalAsync(BaseMockComponent)).not.toThrowError();
-      expect(() => actions.showPortalAsync('some_component')).not.toThrowError();
+      expect(() => showPortalAsync(BaseMockComponent)).not.toThrowError();
+      expect(() => showPortalAsync("some_component")).not.toThrowError();
     });
 
     it("showPortal does not throw an error", () => {
-      expect(() => actions.showPortal(BaseMockComponent)).not.toThrowError();
-      expect(() => actions.showPortal('some_component')).not.toThrowError();
+      expect(() => showPortal(BaseMockComponent)).not.toThrowError();
+      expect(() => showPortal("some_component")).not.toThrowError();
     });
   });
 
