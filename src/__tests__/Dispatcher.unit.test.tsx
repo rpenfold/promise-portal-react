@@ -20,6 +20,13 @@ describe("<Dispatcher />", () => {
     });
   });
 
+  describe("Dispatcher.showPortal()", () => {
+    it('invokes "showPortalAsync" on the singleton instance', async () => {
+      await Dispatcher.showPortal(React.Component);
+      expect(props.showPortal).toBeCalled();
+    });
+  });
+
   describe("Dispatcher.clear()", () => {
     it('invokes "clear" on the singleton instance', () => {
       Dispatcher.clear();

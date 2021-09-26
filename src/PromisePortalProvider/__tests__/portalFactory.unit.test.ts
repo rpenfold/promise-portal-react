@@ -1,7 +1,7 @@
-import React, { ErrorInfo } from "react";
+import React, { ErrorInfo, RefObject } from "react";
 import { ProviderInternalContext } from "../types";
 import { Portal } from "../../types";
-import { buildAwaitablePortal } from "../portalFactory";
+import { buildPortal, buildAwaitablePortal } from "../portalFactory";
 
 describe("portalFactory", () => {
   describe("buildAwaitablePortal()", () => {
@@ -59,6 +59,60 @@ describe("portalFactory", () => {
 
       it("removes portal", () => {
         portal.onError(new Error(), {} as ErrorInfo);
+        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+      });
+    });
+
+    describe("portal.onRequestClose()", () => {
+      it("invokes requestClosePortal", () => {
+        portal.onRequestClose();
+        expect(mockInternalContext.requestClosePortal).toBeCalledWith(
+          portal.id
+        );
+      });
+    });
+  });
+
+  describe("buildPortal()", () => {
+    const forwardRef = {} as RefObject<unknown>;
+    let mockInternalContext: ProviderInternalContext;
+    let portal: Portal;
+
+    beforeEach(() => {
+      mockInternalContext = {
+        removePortal: jest.fn(),
+        requestClosePortal: jest.fn(),
+        setPortals: jest.fn(),
+      };
+      portal = buildPortal(forwardRef)(
+        React.Component,
+        {},
+        mockInternalContext
+      );
+    });
+
+    describe("portal.onCancel()", () => {
+      it("removes portal", () => {
+        portal.onCancel();
+        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+      });
+    });
+
+    describe("portal.onComplete()", () => {
+      it("removes portal", () => {
+        portal.onComplete();
+        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+      });
+    });
+
+    describe("portal.onError()", () => {
+      it("throws error", () => {
+        const mockError = new Error();
+        expect(() => portal.onError(mockError, {} as ErrorInfo)).toThrow(mockError);
+      });
+
+      it("removes portal", () => {
+        expect(() => portal.onError(new Error(), {} as ErrorInfo)).toThrowError();
         expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
       });
     });
