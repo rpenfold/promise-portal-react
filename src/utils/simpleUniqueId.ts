@@ -4,6 +4,6 @@
  * IDs.
  * @returns {string} unique ID
  */
-export default function generateSimpleUniqueId() {
+export default function generateSimpleUniqueId(): string {
   return `${Date.now()}:${Math.random().toString().substr(2)}`;
 }

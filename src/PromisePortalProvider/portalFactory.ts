@@ -52,7 +52,7 @@ export const buildPortal = (forwardRef: RefObject<unknown>) => (
   Component: PortalComponentType,
   props: ComponentProps,
   context: ProviderInternalContext
-) => {
+): Portal => {
   const id = generateSimpleUniqueId();
   return {
     id,
@@ -67,7 +67,7 @@ export const buildPortal = (forwardRef: RefObject<unknown>) => (
     onComplete: (): void => {
       context.removePortal(id);
     },
-    onError: (error: Error, errorInfo: ErrorInfo): void => {
+    onError: (error: Error): void => {
       context.removePortal(id);
       throw error;
     },

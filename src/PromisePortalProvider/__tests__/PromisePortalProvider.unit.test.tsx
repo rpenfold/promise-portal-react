@@ -1,4 +1,3 @@
-import React, { ErrorInfo } from "react";
 import getMockPortal from "./mockPortal";
 import { Portal } from "../../types";
 import { MatchPortalPredicate } from "../types";
