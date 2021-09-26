@@ -18,7 +18,6 @@ jobs:
         run: npm run lint
       - name: Run Tests
         run: npm t
-      - run: npm version ${GITHUB_REF##*/} -git-tag-version false
       - name: Build
         run: npm run build
       - name: Publish
