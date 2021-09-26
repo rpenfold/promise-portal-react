@@ -9,6 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
       - name: Checkout Branch
         uses: actions/checkout@v2
       - run: echo ${GITHUB_REF##*/}
