@@ -19,7 +19,7 @@ For yarn:
 yarn add promise-portal-react
 ```
 
-## Usage
+## Getting Started
 
 First off, you need to mount the portal provider somewhere in the application. Ideally, it should be close to the root, but below any configuration components like context providers, global error boundaries, etc.
 
@@ -38,7 +38,9 @@ import PromisePortal from "promise-portal-react";
 
 Any components that you show through promise-portal will be mounted here in the view tree.
 
-Now, to show a component:
+## Usage
+
+Now, to show a component using the `usePromisePortal` hook:
 
 ```javascript
 import { usePromisePortal } from "react-promise-portal";
@@ -60,7 +62,7 @@ function MyComponent(props) {
 export default MyComponent;
 ```
 
-or using class-based components:
+or using class-based components via the `withPromisePortal` HOC:
 
 ```javascript
 import { withPromisePortal } from "promise-portal-react";
