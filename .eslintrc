@@ -20,5 +20,10 @@
     "ignorePatterns": [
       "dist",
       "node_modules"
-    ]
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
   }

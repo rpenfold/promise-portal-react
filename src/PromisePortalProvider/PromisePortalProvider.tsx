@@ -25,7 +25,7 @@ import getComponentName from "../utils/getComponentName";
  * Removes all components. Iterates across all existing components and cancels them individually. This
  * allows for proper cleanup.
  */
-export const clearPortals = (portals: Array<Portal>) => (predicate?: MatchPortalPredicate) => {
+export const clearPortals = (portals: Array<Portal>) => (predicate?: MatchPortalPredicate): void => {
   portals.forEach((portal) => {
     if (!predicate || predicate(getComponentName(portal.Component), portal.props)) {
       portal.onCancel()

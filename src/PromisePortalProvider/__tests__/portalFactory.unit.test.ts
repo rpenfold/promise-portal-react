@@ -1,4 +1,5 @@
 import React, { ErrorInfo } from "react";
+import { ProviderInternalContext } from "../types";
 import { Portal } from "../../types";
 import { buildAwaitablePortal } from "../portalFactory";
 
@@ -6,14 +7,14 @@ describe("portalFactory", () => {
   describe("buildAwaitablePortal()", () => {
     const resolve = jest.fn();
     const reject = jest.fn();
-    let mockInternalContext: any;
+    let mockInternalContext: ProviderInternalContext;
     let portal: Portal;
 
     beforeEach(() => {
       mockInternalContext = {
         removePortal: jest.fn(),
         requestClosePortal: jest.fn(),
-        SetPortals: jest.fn(),
+        setPortals: jest.fn(),
       };
       portal = buildAwaitablePortal(resolve, reject)(
         React.Component,
