@@ -1,9 +1,5 @@
-import { PortalComponentType } from "types";
+import { ComponentType } from "react";
 
-export default function getComponentName(Component: PortalComponentType): string {
-  if (typeof Component === 'string') {
-    return Component;
-  }
-
-  return Component.displayName ?? Component.name ?? "Component";
+export default function getComponentName(Component: ComponentType<any>): string { // eslint-disable-line @typescript-eslint/no-explicit-any
+    return Component.displayName ?? Component.name ?? "Component";
 }

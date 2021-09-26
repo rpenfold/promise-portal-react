@@ -13,7 +13,7 @@ describe("getComponentName()", () => {
   });
 
   it("gets name if available", () => {
-    function MyComponent() { return <React.Fragment /> };
+    function MyComponent() { return <React.Fragment /> }
 
     expect(getComponentName(MyComponent)).toEqual(mockComponentName);
   });
