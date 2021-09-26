@@ -1,4 +1,4 @@
-![Tests](https://github.com/rpenfold/react-promise-portal/workflows/Test/badge.svg)
+![Tests](https://github.com/rpenfold/promise-portal-react/workflows/Test/badge.svg)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1e7ba17c5d534a81aa6abdb168dc5b08)](https://www.codacy.com/gh/rpenfold/promise-portal-react/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rpenfold/promise-portal-react&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/rpenfold/promise-portal-react/branch/master/graph/badge.svg?token=t9DZ2i0Ccr)](https://codecov.io/gh/rpenfold/promise-portal-react)
 [![npm version](https://badge.fury.io/js/promise-portal-react.svg)](https://badge.fury.io/js/promise-portal-react)
