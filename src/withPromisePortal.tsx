@@ -1,5 +1,5 @@
 import React, { ComponentType, ReactNode } from "react";
-import getComponentName from "utils/getComponentName";
+import getComponentName from "./utils/getComponentName";
 import PromisePortalContext from "./PromisePortalContext";
 import { PromisePortalActions } from "./types";
 
