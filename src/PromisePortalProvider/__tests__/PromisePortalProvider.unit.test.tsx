@@ -27,6 +27,7 @@ describe("PromisePortalProvider", () => {
 
     it("showPortal does not throw an error", () => {
       expect(() => showPortal(BaseMockComponent)).not.toThrowError();
+      expect(() => showPortal(() => null)).not.toThrowError();
       expect(() => showPortal("some_component")).not.toThrowError();
     });
   });

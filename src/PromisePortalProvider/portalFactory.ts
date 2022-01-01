@@ -49,7 +49,7 @@ export const buildAwaitablePortal =
   };
 
 export const buildPortal =
-  (forwardRef: RefObject<unknown>) =>
+  (forwardRef: RefObject<unknown> | null) =>
   (
     Component: PortalComponentType,
     props: ComponentProps,

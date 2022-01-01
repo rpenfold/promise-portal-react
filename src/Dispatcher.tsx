@@ -24,7 +24,7 @@ class Dispatcher extends Component<PromisePortalActions> {
   static showPortal = (
     component: ComponentParam,
     props?: ComponentProps
-  ): RefObject<unknown> => {
+  ): RefObject<unknown> | null => {
     return Dispatcher.instance.props.showPortal(component, props);
   };
 

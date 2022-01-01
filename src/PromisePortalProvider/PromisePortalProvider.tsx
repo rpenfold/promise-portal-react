@@ -20,6 +20,7 @@ import Dispatcher from "../Dispatcher";
 import { buildAwaitablePortal, buildPortal } from "./portalFactory";
 import { ProviderInternalContext, MatchPortalPredicate } from "./types";
 import getComponentName from "../utils/getComponentName";
+import checkIsClassComponent from "../utils/checkIsClassComponent";
 
 /**
  * Removes all components. Iterates across all existing components and cancels them individually. This
@@ -95,11 +96,11 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         ? ComponentRegistry.find(component)
         : component
     ) as PortalComponentType;
-    const forwardRef = React.createRef();
-    const portal = buildPortal(forwardRef)(Component, props, internalContext);
+    const ref = checkIsClassComponent(Component) ? React.createRef() : null;
+    const portal = buildPortal(ref)(Component, props, internalContext);
 
     setPortals(addPortalUpdater(portal));
-    return forwardRef;
+    return ref;
   };
 
   const actions = {

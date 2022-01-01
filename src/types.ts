@@ -35,7 +35,7 @@ export interface PromisePortalActions {
   showPortal(
     component: ComponentParam,
     props?: ComponentProps
-  ): RefObject<unknown>;
+  ): RefObject<unknown> | null;
   showPortalAsync<T = unknown>(
     component: ComponentParam,
     props?: ComponentProps
@@ -55,7 +55,7 @@ export interface Portal<T = unknown> {
   /** Whether to force the component to be shown even if it's not at the front of the queue */
   forceShow?: boolean;
   /** Forward ref to expose inner component to caller when using synchronously */
-  forwardRef?: RefObject<unknown>;
+  forwardRef?: RefObject<unknown> | null;
   /** A convenience prop for triggering open/close animations */
   open: boolean;
   /** Props to be passed down to component */
