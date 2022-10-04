@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { Suspense, useState, useCallback } from "react";
+import startTransition from '../utils/startTransition.polyfill';
 import PromisePortalContext from "../PromisePortalContext";
 import PromiseComponent from "../PromiseComponent";
 import ComponentRegistry from "../ComponentRegistry";
@@ -81,7 +82,9 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
           internalContext
         ) as Portal;
 
-        setPortals(addPortalUpdater(portal));
+        startTransition(() => {
+          setPortals(addPortalUpdater(portal));
+        })
       });
     },
     []
@@ -99,7 +102,9 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     const ref = checkIsClassComponent(Component) ? React.createRef() : null;
     const portal = buildPortal(ref)(Component, props, internalContext);
 
-    setPortals(addPortalUpdater(portal));
+    startTransition(() => {
+      setPortals(addPortalUpdater(portal));
+    });
     return ref;
   };
 
@@ -112,10 +117,12 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   return (
     <PromisePortalContext.Provider value={actions}>
       {children}
-      {portals.map((portal, index) => {
-        return <PromiseComponent key={portal.id} index={index} data={portal} />;
-      })}
-      <Dispatcher {...actions} />
+      <Suspense fallback={null}>
+        {portals.map((portal, index) => {
+          return <PromiseComponent key={portal.id} index={index} data={portal} />;
+        })}
+        <Dispatcher {...actions} />
+      </Suspense>
     </PromisePortalContext.Provider>
   );
 };
