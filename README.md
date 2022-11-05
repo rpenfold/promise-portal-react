@@ -86,6 +86,26 @@ And you now you can render a component near the root of the application from any
 
 So how does the caller get the result back? When a component is shown via the promise-portal it injects two props: (1) complete and (2) cancel. These can be though of as resolve and reject. `complete(data)` will resolve the promise-component returning the data payload in the result that will be received by the caller. `cancel()` will reject the promise-component and `cancelled` will be true in the result.
 
+## Portal component
+
+Sometimes you don't want to call to show the component imperatively. Sometimes you just want to want to render the component just like any other component, but have it mount at a different part of the component tree. You can do that as well:
+
+```javascript
+import { Portal } from "promise-portal-react";
+
+function MyComponent() {
+  return (
+    <Portal>
+      <SomeModal />
+    </Portal>
+  );
+}
+```
+
+| Prop | Type | Description | Default |
+|---|---|---|---|
+| closeStrategy | 'cancel', 'requestClose' | The method to use when closing the portal. `cancel` will clear the portal immediately, `requestClose` toggles the component's `open` prop for orchestrating close transistions. | 'cancel' |
+
 ## Why use promise portal?
 
 Frequently we just want to pop up a dialog or modal to get feedback from the user. Traditional modals in React require quite a bit of boilerplate, and in many scenarios it is difficult to get the result of the user interaction back to the caller. You can think of promise portals as an asynchronous method for getting user input. Of course you can use it as a simplified API for presenting modals as well.
