@@ -31,11 +31,17 @@ export interface PromiseComponentProps<T = unknown> {
   requestClose(): void;
 }
 
+export interface ShowPortalResult {
+  ref: RefObject<unknown> | null;
+  cancel(): void;
+  requestClose(): void;
+}
+
 export interface PromisePortalActions {
   showPortal(
     component: ComponentParam,
     props?: ComponentProps
-  ): RefObject<unknown> | null;
+  ): ShowPortalResult;
   showPortalAsync<T = unknown>(
     component: ComponentParam,
     props?: ComponentProps

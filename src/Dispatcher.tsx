@@ -4,6 +4,7 @@ import {
   ComponentProps,
   PromisePortalActions,
   PromiseComponentResult,
+  ShowPortalResult,
 } from "types";
 import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
@@ -24,7 +25,7 @@ class Dispatcher extends Component<PromisePortalActions> {
   static showPortal = (
     component: ComponentParam,
     props?: ComponentProps
-  ): RefObject<unknown> | null => {
+  ): ShowPortalResult => {
     return Dispatcher.instance.props.showPortal(component, props);
   };
 

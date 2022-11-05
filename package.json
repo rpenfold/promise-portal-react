@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run lint && rm -rf ./dist && tsc",
-    "start": "tsc --watch",
+    "start": "tsc --watch --outDir ./example/node_modules/promise-portal-react/dist",
     "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0",
     "prepare": "npm run build",
     "test": "jest",

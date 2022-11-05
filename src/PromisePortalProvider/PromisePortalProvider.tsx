@@ -105,7 +105,11 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     startTransition(() => {
       setPortals(addPortalUpdater(portal));
     });
-    return ref;
+    return {
+      cancel: portal.onCancel,
+      ref,
+      requestClose: portal.onRequestClose,
+    };
   };
 
   const actions = {

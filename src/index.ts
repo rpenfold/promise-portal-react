@@ -15,6 +15,8 @@ export { default as usePromisePortal } from "./usePromisePortal";
 
 export { default as withPromisePortal } from "./withPromisePortal";
 
+export { default as Portal } from "./Portal";
+
 const promisePortal = {
   clear: Dispatcher.clear,
   showPortal: Dispatcher.showPortal,
