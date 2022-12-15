@@ -8,9 +8,11 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*",
+    "!**/index.ts",
     "!node_modules/**",
     "!dist/**",
     "!src/PromisePortalProvider/__tests__/mockPortal.ts",
+    "!src/utils/startTransition.polyfill.ts",
   ],
   // coverageThreshold: {
   //   global: {
@@ -24,6 +26,6 @@ module.exports = {
     "dist"
   ],
   testPathIgnorePatterns: [
-    "src/PromisePortalProvider/__tests__/mockPortal.ts"
+    "src/PromisePortalProvider/__tests__/mockPortal.ts",
   ]
 };

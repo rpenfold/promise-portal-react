@@ -25,6 +25,12 @@ describe("portalFactory", () => {
       reject.mockReset();
     });
 
+    it('uses key prop for id if provided', () => {
+      const mockKey = 'some_key';
+      portal = buildAwaitablePortal(resolve, reject)(React.Component, { key: mockKey }, mockInternalContext);
+      expect(portal.id).toEqual(mockKey);
+    });
+
     describe("portal.onCancel()", () => {
       it("returns correct payload", () => {
         const mockPayload = { a: 1 };
@@ -89,6 +95,12 @@ describe("portalFactory", () => {
         {},
         mockInternalContext
       );
+    });
+
+    it('uses key prop for id if provided', () => {
+      const mockKey = 'some_key';
+      portal = buildPortal(forwardRef)(React.Component, { key: mockKey }, mockInternalContext);
+      expect(portal.id).toEqual(mockKey);
     });
 
     describe("portal.onCancel()", () => {

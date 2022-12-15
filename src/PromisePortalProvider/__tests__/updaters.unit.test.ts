@@ -26,6 +26,13 @@ describe("PromisePortalProvider.updaters", () => {
   describe("addPortalUpdater()", () => {
     it("correctly adds portal", () => {
       const portals = [getMockPortal("1")];
+      const newPortal = getMockPortal("1");
+      const result = addPortalUpdater(newPortal)(portals);
+      expect(result).toEqual([...portals]);
+    });
+
+    it("does not add portal if another found with matching id", () => {
+      const portals = [getMockPortal("1")];
       const newPortal = getMockPortal("2");
       const result = addPortalUpdater(newPortal)(portals);
       expect(result).toEqual([...portals, newPortal]);

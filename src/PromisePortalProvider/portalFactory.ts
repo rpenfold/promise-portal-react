@@ -22,10 +22,10 @@ export const buildAwaitablePortal =
   ) =>
   (
     Component: PortalComponentType,
-    props: ComponentProps,
+    props: Record<string, unknown>,
     context: ProviderInternalContext
   ): Portal<T> => {
-    const id = (props?.key as string) ?? generateSimpleUniqueId();
+    const id = (props.key as string) ?? generateSimpleUniqueId();
     return {
       id,
       Component,
@@ -52,10 +52,10 @@ export const buildPortal =
   (forwardRef: RefObject<unknown> | null) =>
   (
     Component: PortalComponentType,
-    props: ComponentProps,
+    props: Record<string, unknown>,
     context: ProviderInternalContext
   ): Portal => {
-    const id = (props?.key as string) ?? generateSimpleUniqueId();
+    const id = (props.key as string) ?? generateSimpleUniqueId();
     return {
       id,
       Component,
