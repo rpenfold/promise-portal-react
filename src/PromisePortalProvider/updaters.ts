@@ -24,12 +24,14 @@ export function composeUpdater<T extends Array<unknown>>(
 }
 
 /**
- * Updater for adding a portal to the top of the stack.
+ * Updater for adding a portal to the top of the stack. Does not add if another portal
+ * with matching `id` is found.
  */
 export const addPortalUpdater =
   (portal: Portal) =>
-  (portals: Array<Portal>): Array<Portal> =>
-    [...portals, portal];
+  (portals: Array<Portal>): Array<Portal> => !(portals.some(p => p.id === portal.id))
+    ? [...portals, portal]
+    : portals;
 
 /**
  * Updater for removing a portal from the stack by id.

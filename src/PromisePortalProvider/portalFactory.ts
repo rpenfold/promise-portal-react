@@ -25,7 +25,7 @@ export const buildAwaitablePortal =
     props: ComponentProps,
     context: ProviderInternalContext
   ): Portal<T> => {
-    const id = generateSimpleUniqueId();
+    const id = (props?.key as string) ?? generateSimpleUniqueId();
     return {
       id,
       Component,
@@ -55,7 +55,7 @@ export const buildPortal =
     props: ComponentProps,
     context: ProviderInternalContext
   ): Portal => {
-    const id = generateSimpleUniqueId();
+    const id = (props?.key as string) ?? generateSimpleUniqueId();
     return {
       id,
       Component,

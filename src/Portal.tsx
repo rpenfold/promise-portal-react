@@ -5,8 +5,8 @@ import usePromisePortal from './usePromisePortal';
 type CloseStrategy = 'cancel' | 'requestClose';
 
 interface Props {
-    closeStrategy?: CloseStrategy;
-    children: ReactNode;
+  closeStrategy?: CloseStrategy;
+  children: ReactNode;
 }
 
 function Portal(props: Props) {
@@ -18,9 +18,9 @@ function Portal(props: Props) {
     ref.current = showPortal(() => <>{children}</>);
 
     return () => {
-        ref.current?.[closeStrategy]();
+      ref.current?.[closeStrategy]();
     };
-  }, [])
+  }, []);
 
   return null;
 }
