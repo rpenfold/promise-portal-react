@@ -113,3 +113,7 @@ Frequently we just want to pop up a dialog or modal to get feedback from the use
 ## Caveats
 
 Since promise-components are being rendered via a promise, the in-going props cannot be updated. In many cases this is acceptable, or even desired behavior, but it is important to be aware of. Components being shown can still manage their own data dependencies internally, but the caller cannot pass down new props. At some point this feature may be added, but I haven't found any use for it yet.
+
+## When my button is tapped twice rapidly it shows multiple portals
+
+This is because each button press dispatches a separate portal. There are a few ways to address this. Of course you could track some state to know if the modal is open, but that was one of the things we were trying to avoid. You could also add a debounce to the button press handler to prevent users from mashing the button. Lastly, simply provide a `key` prop to when showing the portal. Portals attempting to be shown while another portal with a duplicate key are ignored.
