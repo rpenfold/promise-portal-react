@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React from "react";
 import { Portal } from "./types";
 
 export interface Props {
@@ -6,55 +6,32 @@ export interface Props {
   data: Portal;
 }
 
-interface State {
-  hasErrors: boolean;
-}
+const PromiseComponent: React.FC<Props> = ({ index, data }) => {
+  const {
+    Component,
+    forceShow,
+    forwardRef,
+    open,
+    props,
+    onCancel,
+    onComplete,
+    onRequestClose,
+  } = data;
 
-class PromiseComponent extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+  if (index > 0 && !forceShow) return null;
 
-    this.state = {
-      hasErrors: false,
-    };
-  }
+  const Comp = Component as React.ComponentType<any>;
 
-  componentDidCatch(error: Error, info: ErrorInfo): void {
-    const { onError } = this.props.data;
-    this.setState({ hasErrors: true }, () => {
-      onError(error, info);
-    });
-  }
-
-  render(): ReactNode {
-    const {
-      data: {
-        Component,
-        forceShow,
-        forwardRef,
-        open,
-        props,
-        onCancel,
-        onComplete,
-        onRequestClose,
-      },
-      index,
-    } = this.props;
-    const { hasErrors } = this.state;
-
-    if (hasErrors || (index > 0 && !forceShow)) return null;
-
-    return (
-      <Component
-        {...props}
-        cancel={onCancel}
-        complete={onComplete}
-        open={open}
-        requestClose={onRequestClose}
-        ref={forwardRef}
-      />
-    );
-  }
-}
+  return (
+    <Comp
+      {...props}
+      cancel={onCancel}
+      complete={onComplete}
+      open={open}
+      requestClose={onRequestClose}
+      ref={forwardRef}
+    />
+  );
+};
 
 export default PromiseComponent;
