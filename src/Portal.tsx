@@ -12,7 +12,7 @@ interface Props {
 function Portal(props: Props) {
   const { children, closeStrategy = 'cancel' } = props;
   const { showPortal } = usePromisePortal();
-  const ref = React.useRef<ShowPortalResult>();
+  const ref = React.useRef<ShowPortalResult>(undefined);
 
   React.useEffect(() => {
     ref.current = showPortal(() => <>{children}</>);
