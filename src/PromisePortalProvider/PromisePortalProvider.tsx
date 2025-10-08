@@ -118,7 +118,7 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   };
 
   return (
-    <PromisePortalContext.Provider value={actions}>
+    <PromisePortalContext value={actions}>
       {children}
       <Suspense fallback={null}>
         {portals.map((portal, index) => {
@@ -126,7 +126,7 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         })}
         <Dispatcher {...actions} />
       </Suspense>
-    </PromisePortalContext.Provider>
+    </PromisePortalContext>
   );
 };
 
