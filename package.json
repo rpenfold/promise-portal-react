@@ -1,6 +1,6 @@
 {
-  "name": "promise-portal-react",
-  "version": "0.1.36",
+  "name": "@fiechtor/promise-portal-react",
+  "version": "0.2.0",
   "description": "Allow rendering of promise based components in react and react-native",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rpenfold/promise-portal-react.git"
+    "url": "git+https://github.com/fiechtor/promise-portal-react.git"
   },
   "keywords": [
     "react",
@@ -25,9 +25,9 @@
   "author": "Ryan Penfold",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rpenfold/promise-portal-react/issues"
+    "url": "https://github.com/fiechtor/promise-portal-react/issues"
   },
-  "homepage": "https://github.com/rpenfold/promise-portal-react#readme",
+  "homepage": "https://github.com/fiechtor/promise-portal-react#readme",
   "peerDependencies": {
     "react": "*"
   },
