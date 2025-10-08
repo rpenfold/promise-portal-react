@@ -1,5 +1,4 @@
-import React, { Suspense, useState, useCallback } from "react";
-import startTransition from '../utils/startTransition.polyfill';
+import React, { Suspense, useState, useCallback, startTransition } from "react";
 import PromisePortalContext from "../PromisePortalContext";
 import PromiseComponent from "../PromiseComponent";
 import ComponentRegistry from "../ComponentRegistry";
