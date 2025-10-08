@@ -1,7 +1,11 @@
-![Tests](https://github.com/rpenfold/promise-portal-react/workflows/Test/badge.svg)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1e7ba17c5d534a81aa6abdb168dc5b08)](https://www.codacy.com/gh/rpenfold/promise-portal-react/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rpenfold/promise-portal-react&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/rpenfold/promise-portal-react/branch/master/graph/badge.svg?token=t9DZ2i0Ccr)](https://codecov.io/gh/rpenfold/promise-portal-react)
-[![npm version](https://badge.fury.io/js/promise-portal-react.svg)](https://badge.fury.io/js/promise-portal-react)
+![Tests](https://github.com/fiechtor/promise-portal-react/workflows/Test/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1e7ba17c5d534a81aa6abdb168dc5b08)](https://www.codacy.com/gh/fiechtor/promise-portal-react/dashboard?utm_source=github.com&utm_medium=referral&utm_content=fiechtor/promise-portal-react&utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/fiechtor/promise-portal-react/branch/master/graph/badge.svg?token=t9DZ2i0Ccr)](https://codecov.io/gh/fiechtor/promise-portal-react)
+[![npm version](https://badge.fury.io/js/%40fiechtor%2Fpromise-portal-react.svg)](https://badge.fury.io/js/%40fiechtor%2Fpromise-portal-react)
+
+**Note:** This is a fork of the original [promise-portal-react](https://github.com/rpenfold/promise-portal-react) by Ryan Penfold. This version is compatible only with React 19 and includes updates for modern React features. Copyright © 2024 Ryan Penfold.
+
+Compatible with React 19.
 
 Modals in React are difficult for a couple main reasons. (1) They require a lot of boilerplate to set up, and (2) they are typically "fire and forget", so the caller cannot know what was the result of the user's interaction with the modal. PromisePortal solves these problems, and more.
 
@@ -10,13 +14,13 @@ Modals in React are difficult for a couple main reasons. (1) They require a lot 
 For npm:
 
 ```bash
-npm i promise-portal-react
+npm i @fiechtor/promise-portal-react
 ```
 
 For yarn:
 
 ```bash
-yarn add promise-portal-react
+yarn add @fiechtor/promise-portal-react
 ```
 
 ## Getting Started
@@ -24,15 +28,13 @@ yarn add promise-portal-react
 First off, you need to mount the portal provider somewhere in the application. Ideally, it should be close to the root, but below any configuration components like context providers, global error boundaries, etc.
 
 ```javascript
-import PromisePortal from "promise-portal-react";
+import PromisePortal from "@fiechtor/promise-portal-react";
 // ...
-  return (
-    <View>
-      <PromisePortal.Provider>
-        // ...
-      </PromisePortal.Provider>
-    </View>
-  );
+return (
+  <View>
+    <PromisePortal.Provider>// ...</PromisePortal.Provider>
+  </View>
+);
 // ...
 ```
 
@@ -43,46 +45,50 @@ Any components that you show through promise-portal will be mounted here in the 
 Now, to show a component using the `usePromisePortal` hook:
 
 ```javascript
-import { usePromisePortal } from "react-promise-portal";
+import { usePromisePortal } from "@fiechtor/promise-portal-react";
 import SomeModal from "./SomeModal";
 
 function MyComponent(props) {
   const { showPortalAsync } = usePromisePortal();
   const onButtonPress = async () => {
     const result = await showPortalAsync(SomeModal);
-  }
+  };
 
-  return (
-    <Button onPress={onButtonPress}>
-      Press me!
-    </Button>
-  );
+  return <Button onPress={onButtonPress}>Press me!</Button>;
 }
 
 export default MyComponent;
 ```
 
-or using class-based components via the `withPromisePortal` HOC:
+For strongly typed results in TypeScript:
 
-```javascript
-import { withPromisePortal } from "promise-portal-react";
+```typescript
+import { usePromisePortal } from "@fiechtor/promise-portal-react";
+import ConfirmationModal from "./ConfirmationModal";
 
-class MyComponent extends React.Component {
-  onButtonPress = async () => {
-    const result = await this.props.showPortalAsync(SomeModal);
-  }
-
-  render() {
-    <Button onPress={this.onButtonPress}>
-      Press me!
-    </Button>
-  }
+interface ConfirmationResult {
+  confirmed: boolean;
 }
 
-export default withPromisePortal(MyComponent);
+function MyComponent() {
+  const { showPortalAsync } = usePromisePortal();
+
+  const onButtonPress = async () => {
+    const result = await showPortalAsync<{}, ConfirmationResult>(ConfirmationModal);
+    if (result.cancelled) {
+      console.log("User cancelled");
+    } else {
+      console.log(`Confirmed: ${result.data?.confirmed}`);
+    }
+  };
+
+  return <Button onPress={onButtonPress}>Confirm Action</Button>;
+}
+
+export default MyComponent;
 ```
 
-And you now you can render a component near the root of the application from anywhere, and the caller knows what the result of the user interaction was!
+And now you can render a component near the root of the application from anywhere, and the caller knows what the result of the user interaction was!
 
 So how does the caller get the result back? When a component is shown via the promise-portal it injects two props: (1) complete and (2) cancel. These can be though of as resolve and reject. `complete(data)` will resolve the promise-component returning the data payload in the result that will be received by the caller. `cancel()` will reject the promise-component and `cancelled` will be true in the result.
 
@@ -91,7 +97,7 @@ So how does the caller get the result back? When a component is shown via the pr
 Sometimes you don't want to call to show the component imperatively. Sometimes you just want to want to render the component just like any other component, but have it mount at a different part of the component tree. You can do that as well:
 
 ```javascript
-import { Portal } from "promise-portal-react";
+import { Portal } from "@fiechtor/promise-portal-react";
 
 function MyComponent() {
   return (
@@ -102,8 +108,8 @@ function MyComponent() {
 }
 ```
 
-| Prop | Type | Description | Default |
-|---|---|---|---|
+| Prop          | Type                     | Description                                                                                                                                                                     | Default  |
+| ------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | closeStrategy | 'cancel', 'requestClose' | The method to use when closing the portal. `cancel` will clear the portal immediately, `requestClose` toggles the component's `open` prop for orchestrating close transistions. | 'cancel' |
 
 ## Why use promise portal?
