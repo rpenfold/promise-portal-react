@@ -1,7 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
 import Dispatcher from "../Dispatcher";
 import { PromisePortalActions } from "../types";
+import { render } from "@testing-library/react";
 
 describe("<Dispatcher />", () => {
   const props: PromisePortalActions = {
@@ -11,26 +11,26 @@ describe("<Dispatcher />", () => {
   };
 
   // mount the singleton instance
-  shallow(<Dispatcher {...props} />);
+  render(<Dispatcher {...props} />);
 
   describe("Dispatcher.showPortalAsync()", () => {
     it('invokes "showPortalAsync" on the singleton instance', async () => {
       await Dispatcher.showPortalAsync(React.Component);
-      expect(props.showPortalAsync).toBeCalled();
+      expect(props.showPortalAsync).toHaveBeenCalled();
     });
   });
 
   describe("Dispatcher.showPortal()", () => {
     it('invokes "showPortalAsync" on the singleton instance', async () => {
       await Dispatcher.showPortal(React.Component);
-      expect(props.showPortal).toBeCalled();
+      expect(props.showPortal).toHaveBeenCalled();
     });
   });
 
   describe("Dispatcher.clear()", () => {
     it('invokes "clear" on the singleton instance', () => {
       Dispatcher.clear();
-      expect(props.clear).toBeCalled();
+      expect(props.clear).toHaveBeenCalled();
     });
   });
 });

@@ -19,15 +19,19 @@ describe("portalFactory", () => {
       portal = buildAwaitablePortal(resolve, reject)(
         React.Component,
         {},
-        mockInternalContext
+        mockInternalContext,
       );
       resolve.mockReset();
       reject.mockReset();
     });
 
-    it('uses key prop for id if provided', () => {
-      const mockKey = 'some_key';
-      portal = buildAwaitablePortal(resolve, reject)(React.Component, { key: mockKey }, mockInternalContext);
+    it("uses key prop for id if provided", () => {
+      const mockKey = "some_key";
+      portal = buildAwaitablePortal(resolve, reject)(
+        React.Component,
+        { key: mockKey },
+        mockInternalContext,
+      );
       expect(portal.id).toEqual(mockKey);
     });
 
@@ -35,12 +39,17 @@ describe("portalFactory", () => {
       it("returns correct payload", () => {
         const mockPayload = { a: 1 };
         portal.onCancel(mockPayload);
-        expect(resolve).toBeCalledWith({ cancelled: true, data: mockPayload });
+        expect(resolve).toHaveBeenCalledWith({
+          cancelled: true,
+          data: mockPayload,
+        });
       });
 
       it("removes portal", () => {
         portal.onCancel();
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
@@ -48,32 +57,39 @@ describe("portalFactory", () => {
       it("returns correct payload", () => {
         const mockPayload = { a: 1 };
         portal.onComplete(mockPayload);
-        expect(resolve).toBeCalledWith({ cancelled: false, data: mockPayload });
+        expect(resolve).toHaveBeenCalledWith({
+          cancelled: false,
+          data: mockPayload,
+        });
       });
 
       it("removes portal", () => {
         portal.onComplete();
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
     describe("portal.onError()", () => {
       it("rejects promise", () => {
         portal.onError(new Error(), {} as ErrorInfo);
-        expect(reject).toBeCalled();
+        expect(reject).toHaveBeenCalled();
       });
 
       it("removes portal", () => {
         portal.onError(new Error(), {} as ErrorInfo);
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
     describe("portal.onRequestClose()", () => {
       it("invokes requestClosePortal", () => {
         portal.onRequestClose();
-        expect(mockInternalContext.requestClosePortal).toBeCalledWith(
-          portal.id
+        expect(mockInternalContext.requestClosePortal).toHaveBeenCalledWith(
+          portal.id,
         );
       });
     });
@@ -93,27 +109,35 @@ describe("portalFactory", () => {
       portal = buildPortal(forwardRef)(
         React.Component,
         {},
-        mockInternalContext
+        mockInternalContext,
       );
     });
 
-    it('uses key prop for id if provided', () => {
-      const mockKey = 'some_key';
-      portal = buildPortal(forwardRef)(React.Component, { key: mockKey }, mockInternalContext);
+    it("uses key prop for id if provided", () => {
+      const mockKey = "some_key";
+      portal = buildPortal(forwardRef)(
+        React.Component,
+        { key: mockKey },
+        mockInternalContext,
+      );
       expect(portal.id).toEqual(mockKey);
     });
 
     describe("portal.onCancel()", () => {
       it("removes portal", () => {
         portal.onCancel();
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
     describe("portal.onComplete()", () => {
       it("removes portal", () => {
         portal.onComplete();
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
@@ -121,23 +145,23 @@ describe("portalFactory", () => {
       it("throws error", () => {
         const mockError = new Error();
         expect(() => portal.onError(mockError, {} as ErrorInfo)).toThrow(
-          mockError
+          mockError,
         );
       });
 
       it("removes portal", () => {
-        expect(() =>
-          portal.onError(new Error(), {} as ErrorInfo)
-        ).toThrowError();
-        expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
+        expect(() => portal.onError(new Error(), {} as ErrorInfo)).toThrow();
+        expect(mockInternalContext.removePortal).toHaveBeenCalledWith(
+          portal.id,
+        );
       });
     });
 
     describe("portal.onRequestClose()", () => {
       it("invokes requestClosePortal", () => {
         portal.onRequestClose();
-        expect(mockInternalContext.requestClosePortal).toBeCalledWith(
-          portal.id
+        expect(mockInternalContext.requestClosePortal).toHaveBeenCalledWith(
+          portal.id,
         );
       });
     });

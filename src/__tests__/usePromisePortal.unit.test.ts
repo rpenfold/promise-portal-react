@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { PromisePortalActions } from "../types";
 import usePromisePortal from "../usePromisePortal";
 

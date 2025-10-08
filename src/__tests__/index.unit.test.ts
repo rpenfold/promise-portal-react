@@ -1,8 +1,4 @@
-import PromisePortal, {
-  ComponentRegistry,
-  usePromisePortal,
-  withPromisePortal,
-} from "..";
+import PromisePortal, { ComponentRegistry, usePromisePortal } from "..";
 
 describe("index", () => {
   it("PromisePortal export works correctly", () => {
@@ -13,10 +9,6 @@ describe("index", () => {
 
   it("ComponentRegistry export works correctly", () => {
     expect(ComponentRegistry).toBeDefined();
-  });
-
-  it("withPromisePortal export works correctly", () => {
-    expect(withPromisePortal).toBeDefined();
   });
 
   it("usePromisePortal export works correclty", () => {

@@ -1,34 +1,130 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen, act } from "@testing-library/react";
 import getMockPortal from "./mockPortal";
-import { withPromisePortal } from "../..";
-import { Portal, PromisePortalActions } from "../../types";
+import { Portal } from "../../types";
 import { MatchPortalPredicate } from "../types";
 import { clearPortals, PromisePortalProvider } from "../PromisePortalProvider";
+import Dispatcher from "../../Dispatcher";
+import ComponentRegistry from "../../ComponentRegistry";
 
-class BaseMockComponent extends React.Component {}
-const MockComponent = withPromisePortal<any>(BaseMockComponent); // eslint-disable-line @typescript-eslint/no-explicit-any
+class BaseMockComponent extends React.Component {
+  render() {
+    return null;
+  }
+}
 
 describe("PromisePortalProvider", () => {
-  describe("<PromisePortalProvider />", () => {
-    const wrapper = shallow(
-      <PromisePortalProvider>
-        <MockComponent />
-      </PromisePortalProvider>
-    );
-    const accessor = wrapper.dive().at(0).dive().dive();
-    const { showPortal, showPortalAsync } =
-      accessor.props() as PromisePortalActions;
+  beforeAll(() => {
+    ComponentRegistry.register("some_component", BaseMockComponent);
+  });
 
-    it("showPortalAsync does not throw an error", () => {
-      expect(() => showPortalAsync(BaseMockComponent)).not.toThrowError();
-      expect(() => showPortalAsync("some_component")).not.toThrowError();
+  afterAll(() => {
+    ComponentRegistry.clear();
+  });
+  describe("<PromisePortalProvider />", () => {
+    it("renders children", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      expect(screen.getByText("test")).toBeTruthy();
     });
 
-    it("showPortal does not throw an error", () => {
-      expect(() => showPortal(BaseMockComponent)).not.toThrowError();
-      expect(() => showPortal(() => null)).not.toThrowError();
-      expect(() => showPortal("some_component")).not.toThrowError();
+    it("showPortalAsync returns a promise", async () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      await act(async () => {
+        const result = Dispatcher.showPortalAsync(BaseMockComponent);
+        expect(result).toBeInstanceOf(Promise);
+      });
+      await act(async () => {
+        const result = Dispatcher.showPortalAsync("some_component");
+        expect(result).toBeInstanceOf(Promise);
+      });
+    });
+
+    it("showPortalAsync does not throw with props", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      expect(() => {
+        act(() => {
+          Dispatcher.showPortalAsync(BaseMockComponent, { someProp: "value" });
+        });
+      }).not.toThrow();
+    });
+
+    it("showPortalAsync does not throw with string component", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      expect(() => {
+        act(() => {
+          Dispatcher.showPortalAsync("some_component");
+        });
+      }).not.toThrow();
+    });
+
+    it("showPortal returns correct result shape", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      act(() => {
+        const result = Dispatcher.showPortal(BaseMockComponent);
+        expect(result).toHaveProperty("cancel");
+        expect(result).toHaveProperty("requestClose");
+        expect(result).toHaveProperty("ref");
+        expect(typeof result.cancel).toBe("function");
+        expect(typeof result.requestClose).toBe("function");
+      });
+      act(() => {
+        const result = Dispatcher.showPortal(() => null);
+        expect(result).toHaveProperty("cancel");
+        expect(result).toHaveProperty("requestClose");
+        expect(result).toHaveProperty("ref");
+      });
+      act(() => {
+        const result = Dispatcher.showPortal("some_component");
+        expect(result).toHaveProperty("cancel");
+        expect(result).toHaveProperty("requestClose");
+        expect(result).toHaveProperty("ref");
+      });
+    });
+
+    it("showPortal result methods do not throw when called", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      act(() => {
+        const result = Dispatcher.showPortal(BaseMockComponent);
+        expect(() => result.cancel()).not.toThrow();
+        expect(() => result.requestClose()).not.toThrow();
+      });
+    });
+
+    it("showPortal does not throw with props", () => {
+      render(
+        <PromisePortalProvider>
+          <div>test</div>
+        </PromisePortalProvider>,
+      );
+      expect(() => {
+        act(() => {
+          Dispatcher.showPortal(BaseMockComponent, { someProp: "value" });
+        });
+      }).not.toThrow();
     });
   });
 
@@ -38,7 +134,7 @@ describe("PromisePortalProvider", () => {
       clearPortals(mockPortals)();
 
       mockPortals.forEach((portal: Portal) =>
-        expect(portal.onCancel).toBeCalled()
+        expect(portal.onCancel).toHaveBeenCalled(),
       );
     });
 
@@ -51,8 +147,8 @@ describe("PromisePortalProvider", () => {
 
       clearPortals(mockPortals)(mockPredicate);
 
-      expect(mockPortalA.onCancel).toBeCalled();
-      expect(mockPortalB.onCancel).not.toBeCalled();
+      expect(mockPortalA.onCancel).toHaveBeenCalled();
+      expect(mockPortalB.onCancel).not.toHaveBeenCalled();
     });
   });
 });

@@ -19,7 +19,7 @@ describe("PromisePortalProvider.updaters", () => {
       const composed = composeUpdater(mockSetComponents, mockUpdater);
 
       composed();
-      expect(mockUpdater).toBeCalled();
+      expect(mockUpdater).toHaveBeenCalled();
     });
   });
 
