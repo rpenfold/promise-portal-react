@@ -5,5 +5,5 @@
  * @returns {string} unique ID
  */
 export default function generateSimpleUniqueId(): string {
-  return `${Date.now()}:${Math.random().toString().substr(2)}`;
+  return `${Date.now()}:${Math.random().toString().substring(2)}`;
 }
