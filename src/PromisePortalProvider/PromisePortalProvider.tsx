@@ -64,9 +64,9 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
   };
 
   const showPortalAsync = useCallback(
-    <T,>(
-      component: ComponentParam,
-      props: ComponentProps = {}
+    <P extends ComponentProps, T>(
+      component: ComponentParam<P>,
+      props: ComponentProps = {},
     ): Promise<PromiseComponentResult<T>> => {
       const Component = (
         typeof component === "string"
@@ -89,15 +89,15 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     []
   );
 
-  const showPortal = (
-    component: ComponentParam,
-    props: ComponentProps = {}
+  const showPortal = <P extends ComponentProps>(
+    component: ComponentParam<P>,
+    props?: P,
   ) => {
     const Component = (
       typeof component === "string"
         ? ComponentRegistry.find(component)
         : component
-    ) as PortalComponentType;
+    ) as PortalComponentType<P>;
     const ref = checkIsClassComponent(Component) ? React.createRef() : null;
     const portal = buildPortal(ref)(Component, props, internalContext);
 

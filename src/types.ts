@@ -1,13 +1,15 @@
 import { ComponentType, ErrorInfo, ReactNode, RefObject } from "react";
 import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
-export type ComponentParam = ComponentType<unknown> | ReactNode | string;
+export type ComponentParam<P extends ComponentProps = undefined> =
+  | ComponentType<P>
+  | ReactNode
+  | string;
 
 export type ComponentProps = Record<string, unknown> | undefined;
 
-export type PortalComponentType = ComponentType<
-  PromiseComponentProps & ComponentProps
->;
+export type PortalComponentType<P extends ComponentProps = undefined> =
+  ComponentType<PromiseComponentProps & (P extends undefined ? {} : P)>;
 
 export interface PromiseComponentResult<T = Record<string, unknown>> {
   /** Whether the promise component was cancelled */
@@ -38,13 +40,13 @@ export interface ShowPortalResult {
 }
 
 export interface PromisePortalActions {
-  showPortal(
-    component: ComponentParam,
-    props?: ComponentProps
+  showPortal<P extends ComponentProps>(
+    component: ComponentParam<P>,
+    props?: P,
   ): ShowPortalResult;
-  showPortalAsync<T = unknown>(
-    component: ComponentParam,
-    props?: ComponentProps
+  showPortalAsync<P extends ComponentProps, T = unknown>(
+    component: ComponentParam<P>,
+    props?: P,
   ): Promise<PromiseComponentResult<T>>;
   clear(predicate?: MatchPortalPredicate): void;
 }
@@ -57,7 +59,7 @@ export interface Portal<T = unknown> {
    * */
   id: string;
   /** The React component to be rendered */
-  Component: PortalComponentType;
+  Component: PortalComponentType<any>;
   /** Whether to force the component to be shown even if it's not at the front of the queue */
   forceShow?: boolean;
   /** Forward ref to expose inner component to caller when using synchronously */
