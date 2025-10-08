@@ -4,7 +4,7 @@ export type SetPortals = React.Dispatch<React.SetStateAction<Portal[]>>;
 
 export type MatchPortalPredicate = (
   componentName: string,
-  props: ComponentProps
+  props: ComponentProps,
 ) => boolean;
 
 export interface ProviderInternalContext {

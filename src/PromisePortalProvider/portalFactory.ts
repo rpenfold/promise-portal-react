@@ -14,16 +14,16 @@ import { ProviderInternalContext } from "./types";
 export const buildAwaitablePortal =
   <T>(
     resolve: (
-      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>
+      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>,
     ) => void,
     reject: (
-      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>
-    ) => void
+      value: PromiseComponentResult<T> | PromiseLike<PromiseComponentResult<T>>,
+    ) => void,
   ) =>
   (
     Component: PortalComponentType,
     props: Record<string, unknown>,
-    context: ProviderInternalContext
+    context: ProviderInternalContext,
   ): Portal<T> => {
     const id = (props.key as string) ?? generateSimpleUniqueId();
     return {

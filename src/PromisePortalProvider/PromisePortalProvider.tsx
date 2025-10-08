@@ -39,20 +39,20 @@ export const clearPortals =
     });
   };
 
-export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
+export const PromisePortalProvider = ({ children }: Props) => {
   const [portals, setPortals] = useState<Array<Portal>>([]);
 
   const removePortal = useCallback(
     composeUpdater<[id: string]>(setPortals, removePortalByIdUpdater),
-    []
+    [],
   );
 
   const requestClosePortal = useCallback(
     composeUpdater<[id: string]>(
       setPortals,
-      modifyPortalByIdUpdater({ open: false })
+      modifyPortalByIdUpdater({ open: false }),
     ),
-    []
+    [],
   );
 
   const clear = useCallback(clearPortals(portals), [portals]);
@@ -78,15 +78,15 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         const portal = buildAwaitablePortal<T>(resolve, reject)(
           Component,
           props,
-          internalContext
+          internalContext,
         ) as Portal;
 
         startTransition(() => {
           setPortals(addPortalUpdater(portal));
-        })
+        });
       });
     },
-    []
+    [],
   );
 
   const showPortal = <P extends ComponentProps>(
@@ -122,7 +122,9 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
       {children}
       <Suspense fallback={null}>
         {portals.map((portal, index) => {
-          return <PromiseComponent key={portal.id} index={index} data={portal} />;
+          return (
+            <PromiseComponent key={portal.id} index={index} data={portal} />
+          );
         })}
         <Dispatcher {...actions} />
       </Suspense>
