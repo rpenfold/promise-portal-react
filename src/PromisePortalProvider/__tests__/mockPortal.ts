@@ -13,6 +13,7 @@ export default function getMockPortal(
     id,
     Component: MockComponent as PortalComponentType,
     open: true,
+    props: {},
     onComplete: jest.fn(),
     onCancel: jest.fn(),
     onError: jest.fn(),

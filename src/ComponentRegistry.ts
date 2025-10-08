@@ -9,13 +9,16 @@ import { ComponentType } from "react";
  * ered with that string.
  */
 class ComponentRegistry {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static registry: Record<string, ComponentType<any>> = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static register(key: string, Component: ComponentType<any>): void {
     ComponentRegistry.registry[key] = Component;
   }
 
   static registerCollection(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     components: Record<string, ComponentType<any>>,
   ): void {
     ComponentRegistry.registry = Object.assign(
@@ -28,6 +31,7 @@ class ComponentRegistry {
     delete ComponentRegistry.registry[key];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static find(key: string): ComponentType<any> {
     return ComponentRegistry.registry[key];
   }

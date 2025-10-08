@@ -17,7 +17,7 @@ const getProps = ({
   data = {},
 }: PropsFactoryInput = {}): InternalPromiseComponentProps => ({
   data: {
-    Component: MockComponent as any,
+    Component: MockComponent,
     onCancel: jest.fn(),
     onComplete: jest.fn(),
     onError: jest.fn(),
@@ -25,6 +25,7 @@ const getProps = ({
     id: "123",
     open: true,
     forceShow: false,
+    props: {},
     ...data,
   },
   index,

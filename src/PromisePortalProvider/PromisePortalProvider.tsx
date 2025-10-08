@@ -77,7 +77,7 @@ export const PromisePortalProvider = ({ children }: Props) => {
       return new Promise((resolve, reject) => {
         const portal = buildAwaitablePortal<T>(resolve, reject)(
           Component,
-          props,
+          (props as ComponentProps) || {},
           internalContext,
         ) as Portal;
 
@@ -97,7 +97,7 @@ export const PromisePortalProvider = ({ children }: Props) => {
       typeof component === "string"
         ? ComponentRegistry.find(component)
         : component
-    ) as PortalComponentType<P>;
+    ) as PortalComponentType;
     const ref = checkIsClassComponent(Component) ? React.createRef() : null;
     const portal = buildPortal(ref)(Component, props, internalContext);
 

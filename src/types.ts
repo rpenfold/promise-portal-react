@@ -1,15 +1,16 @@
 import { ComponentType, ErrorInfo, ReactNode, RefObject } from "react";
 import { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
-export type ComponentParam<P extends ComponentProps = undefined> =
+export type ComponentParam<P extends ComponentProps> =
   | ComponentType<P>
   | ReactNode
   | string;
 
-export type ComponentProps = Record<string, unknown> | undefined;
+export type ComponentProps = Record<string, unknown>;
 
-export type PortalComponentType<P extends ComponentProps = undefined> =
-  ComponentType<PromiseComponentProps & (P extends undefined ? {} : P)>;
+export type PortalComponentType = ComponentType<
+  PromiseComponentProps & ComponentProps
+>;
 
 export interface PromiseComponentResult<T = Record<string, unknown>> {
   /** Whether the promise component was cancelled */
@@ -59,7 +60,7 @@ export interface Portal<T = unknown> {
    * */
   id: string;
   /** The React component to be rendered */
-  Component: PortalComponentType<any>;
+  Component: PortalComponentType;
   /** Whether to force the component to be shown even if it's not at the front of the queue */
   forceShow?: boolean;
   /** Forward ref to expose inner component to caller when using synchronously */
@@ -67,7 +68,7 @@ export interface Portal<T = unknown> {
   /** A convenience prop for triggering open/close animations */
   open: boolean;
   /** Props to be passed down to component */
-  props?: ComponentProps;
+  props: ComponentProps;
   /** Callback for resolving the promise */
   onComplete(data?: T): void;
   /** Callback for rejecting the promise */

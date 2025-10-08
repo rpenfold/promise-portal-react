@@ -1,5 +1,5 @@
 import React from "react";
-import { Portal } from "./types";
+import { Portal, PromiseComponentProps } from "./types";
 
 export interface Props {
   index: number;
@@ -20,7 +20,9 @@ const PromiseComponent: React.FC<Props> = ({ index, data }) => {
 
   if (index > 0 && !forceShow) return null;
 
-  const Comp = Component as React.ComponentType<any>;
+  const Comp = Component as React.ComponentType<
+    typeof props & PromiseComponentProps
+  >;
 
   return (
     <Comp
