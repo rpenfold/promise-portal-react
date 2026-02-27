@@ -1,4 +1,4 @@
-import { Component, ReactNode, RefObject } from "react";
+import { Component, ReactNode } from "react";
 import {
   ComponentParam,
   ComponentProps,
@@ -15,29 +15,48 @@ import { MatchPortalPredicate } from "./PromisePortalProvider/types";
  * @invariant singleton instance is always mounted as long as the provider is mounted
  */
 class Dispatcher extends Component<PromisePortalActions> {
-  private static instance: Dispatcher;
+  private static instance: Dispatcher | undefined;
+  private prevInstance: Dispatcher | undefined;
 
   constructor(props: PromisePortalActions) {
     super(props);
+    this.prevInstance = Dispatcher.instance;
     Dispatcher.instance = this;
+  }
+
+  componentWillUnmount(): void {
+    if (Dispatcher.instance === this) {
+      Dispatcher.instance = this.prevInstance;
+    }
+  }
+
+  private static ensureProviderMounted(): Dispatcher {
+    const instance = Dispatcher.instance;
+    if (!instance) {
+      throw new Error("PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.");
+    }
+    return instance;
   }
 
   static showPortal = (
     component: ComponentParam,
     props?: ComponentProps
   ): ShowPortalResult => {
-    return Dispatcher.instance.props.showPortal(component, props);
+    const instance = Dispatcher.ensureProviderMounted();
+    return instance.props.showPortal(component, props);
   };
 
   static showPortalAsync = async <T,>(
     component: ComponentParam,
     props?: ComponentProps
   ): Promise<PromiseComponentResult<T>> => {
-    return await Dispatcher.instance.props.showPortalAsync<T>(component, props);
+    const instance = Dispatcher.ensureProviderMounted();
+    return await instance.props.showPortalAsync<T>(component, props);
   };
 
   static clear = (predicate?: MatchPortalPredicate): void => {
-    Dispatcher.instance.props.clear(predicate);
+    const instance = Dispatcher.ensureProviderMounted();
+    instance.props.clear(predicate);
   };
 
   render(): ReactNode {

@@ -1,6 +1,5 @@
 import { ErrorInfo, RefObject } from "react";
 import {
-  ComponentProps,
   Portal,
   PortalComponentType,
   PromiseComponentResult,
