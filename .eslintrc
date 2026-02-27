@@ -15,6 +15,14 @@
       {
         "files": "config/**/*",
         "extends": "eslint:recommended"
+      },
+      {
+        "files": [
+          "**/*.test.{ts,tsx}"
+        ],
+        "rules": {
+          "@typescript-eslint/no-non-null-assertion": "off"
+        }
       }
     ],
     "ignorePatterns": [
