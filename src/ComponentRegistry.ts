@@ -1,4 +1,4 @@
-import { ReactType } from "react";
+import type { ReactType } from "react";
 
 /**
  * ComponentRegistry is used for registering react components to
@@ -18,7 +18,7 @@ class ComponentRegistry {
   static registerCollection(components: Record<string, ReactType>): void {
     ComponentRegistry.registry = Object.assign(
       ComponentRegistry.registry,
-      components
+      components,
     );
   }
 

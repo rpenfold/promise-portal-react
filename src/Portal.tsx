@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-import { ShowPortalResult } from './types';
-import usePromisePortal from './usePromisePortal';
+import React, { type ReactNode } from "react";
+import type { ShowPortalResult } from "./types";
+import usePromisePortal from "./usePromisePortal";
 
-type CloseStrategy = 'cancel' | 'requestClose';
+type CloseStrategy = "cancel" | "requestClose";
 
 interface Props {
   closeStrategy?: CloseStrategy;
@@ -10,10 +10,11 @@ interface Props {
 }
 
 function Portal(props: Props) {
-  const { children, closeStrategy = 'cancel' } = props;
+  const { children, closeStrategy = "cancel" } = props;
   const { showPortal } = usePromisePortal();
   const ref = React.useRef<ShowPortalResult>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-only effect; ref cleanup uses current closeStrategy
   React.useEffect(() => {
     ref.current = showPortal(() => <>{children}</>);
 

@@ -1,12 +1,12 @@
-import { Component, ReactNode } from "react";
-import {
+import { Component, type ReactNode } from "react";
+import type {
   ComponentParam,
   ComponentProps,
-  PromisePortalActions,
   PromiseComponentResult,
+  PromisePortalActions,
   ShowPortalResult,
 } from "types";
-import { MatchPortalPredicate } from "./PromisePortalProvider/types";
+import type { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
 /**
  * Dispatcher is a utility that exposes promise-portal functionality to outside
@@ -33,14 +33,16 @@ class Dispatcher extends Component<PromisePortalActions> {
   private static ensureProviderMounted(): Dispatcher {
     const instance = Dispatcher.instance;
     if (!instance) {
-      throw new Error("PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.");
+      throw new Error(
+        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.",
+      );
     }
     return instance;
   }
 
   static showPortal = (
     component: ComponentParam,
-    props?: ComponentProps
+    props?: ComponentProps,
   ): ShowPortalResult => {
     const instance = Dispatcher.ensureProviderMounted();
     return instance.props.showPortal(component, props);
@@ -48,7 +50,7 @@ class Dispatcher extends Component<PromisePortalActions> {
 
   static showPortalAsync = async <T,>(
     component: ComponentParam,
-    props?: ComponentProps
+    props?: ComponentProps,
   ): Promise<PromiseComponentResult<T>> => {
     const instance = Dispatcher.ensureProviderMounted();
     return await instance.props.showPortalAsync<T>(component, props);

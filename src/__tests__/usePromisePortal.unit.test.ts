@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { PromisePortalActions } from "../types";
+import type { PromisePortalActions } from "../types";
 import usePromisePortal from "../usePromisePortal";
 
 describe("usePromisePortal", () => {

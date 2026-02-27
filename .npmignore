@@ -4,9 +4,7 @@ example
 jest.config.js
 src
 tsconfig.json
-.eslintrc
 .github
 .gitignore
-.prettierrc
 .npmrc
 .watchmanconfig

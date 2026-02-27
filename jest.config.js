@@ -1,10 +1,7 @@
-/* eslint-disable no-undef */
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  setupFiles: [
-    "./config/testSetup.js"
-  ],
+  setupFiles: ["./config/testSetup.js"],
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*",
@@ -22,10 +19,6 @@ module.exports = {
   //     statements: 100
   //   }
   // },
-  modulePathIgnorePatterns: [
-    "dist"
-  ],
-  testPathIgnorePatterns: [
-    "src/PromisePortalProvider/__tests__/mockPortal.ts",
-  ]
+  modulePathIgnorePatterns: ["dist"],
+  testPathIgnorePatterns: ["src/PromisePortalProvider/__tests__/mockPortal.ts"],
 };

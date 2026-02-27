@@ -1,7 +1,7 @@
-import React from "react";
 import { shallow } from "enzyme";
+import React from "react";
 import Dispatcher from "../Dispatcher";
-import { PromisePortalActions } from "../types";
+import type { PromisePortalActions } from "../types";
 
 const makeProps = (): PromisePortalActions => ({
   clear: jest.fn(),
@@ -34,7 +34,10 @@ describe("<Dispatcher />", () => {
       const component = React.Component;
       const portalProps = { foo: "bar" };
       await Dispatcher.showPortalAsync(component, portalProps);
-      expect(props.showPortalAsync).toHaveBeenCalledWith(component, portalProps);
+      expect(props.showPortalAsync).toHaveBeenCalledWith(
+        component,
+        portalProps,
+      );
     });
   });
 
@@ -70,7 +73,7 @@ describe("<Dispatcher />", () => {
       wrapper!.unmount();
       wrapper = null;
       expect(() => Dispatcher.showPortal(React.Component)).toThrow(
-        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>."
+        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.",
       );
     });
 
@@ -78,7 +81,7 @@ describe("<Dispatcher />", () => {
       wrapper!.unmount();
       wrapper = null;
       await expect(Dispatcher.showPortalAsync(React.Component)).rejects.toThrow(
-        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>."
+        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.",
       );
     });
 
@@ -86,7 +89,7 @@ describe("<Dispatcher />", () => {
       wrapper!.unmount();
       wrapper = null;
       expect(() => Dispatcher.clear()).toThrow(
-        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>."
+        "PromisePortal: no provider mounted. Wrap your app in <PromisePortalProvider>.",
       );
     });
   });

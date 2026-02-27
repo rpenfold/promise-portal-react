@@ -1,5 +1,6 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { Portal } from "./types";
+// biome-ignore lint/correctness/noUnusedImports: React is used for JSX with "jsx": "react"
+import React, { Component, type ErrorInfo, type ReactNode } from "react";
+import type { Portal } from "./types";
 
 export interface Props {
   index: number;

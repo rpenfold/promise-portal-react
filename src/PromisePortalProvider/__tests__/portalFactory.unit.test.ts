@@ -1,7 +1,7 @@
-import React, { ErrorInfo, RefObject } from "react";
-import { ProviderInternalContext } from "../types";
-import { Portal } from "../../types";
-import { buildPortal, buildAwaitablePortal } from "../portalFactory";
+import React, { type ErrorInfo, type RefObject } from "react";
+import type { Portal } from "../../types";
+import { buildAwaitablePortal, buildPortal } from "../portalFactory";
+import type { ProviderInternalContext } from "../types";
 
 describe("portalFactory", () => {
   describe("buildAwaitablePortal()", () => {
@@ -19,15 +19,19 @@ describe("portalFactory", () => {
       portal = buildAwaitablePortal(resolve, reject)(
         React.Component,
         {},
-        mockInternalContext
+        mockInternalContext,
       );
       resolve.mockReset();
       reject.mockReset();
     });
 
-    it('uses key prop for id if provided', () => {
-      const mockKey = 'some_key';
-      portal = buildAwaitablePortal(resolve, reject)(React.Component, { key: mockKey }, mockInternalContext);
+    it("uses key prop for id if provided", () => {
+      const mockKey = "some_key";
+      portal = buildAwaitablePortal(resolve, reject)(
+        React.Component,
+        { key: mockKey },
+        mockInternalContext,
+      );
       expect(portal.id).toEqual(mockKey);
     });
 
@@ -73,7 +77,7 @@ describe("portalFactory", () => {
       it("invokes requestClosePortal", () => {
         portal.onRequestClose();
         expect(mockInternalContext.requestClosePortal).toBeCalledWith(
-          portal.id
+          portal.id,
         );
       });
     });
@@ -93,13 +97,17 @@ describe("portalFactory", () => {
       portal = buildPortal(forwardRef)(
         React.Component,
         {},
-        mockInternalContext
+        mockInternalContext,
       );
     });
 
-    it('uses key prop for id if provided', () => {
-      const mockKey = 'some_key';
-      portal = buildPortal(forwardRef)(React.Component, { key: mockKey }, mockInternalContext);
+    it("uses key prop for id if provided", () => {
+      const mockKey = "some_key";
+      portal = buildPortal(forwardRef)(
+        React.Component,
+        { key: mockKey },
+        mockInternalContext,
+      );
       expect(portal.id).toEqual(mockKey);
     });
 
@@ -121,13 +129,13 @@ describe("portalFactory", () => {
       it("throws error", () => {
         const mockError = new Error();
         expect(() => portal.onError(mockError, {} as ErrorInfo)).toThrow(
-          mockError
+          mockError,
         );
       });
 
       it("removes portal", () => {
         expect(() =>
-          portal.onError(new Error(), {} as ErrorInfo)
+          portal.onError(new Error(), {} as ErrorInfo),
         ).toThrowError();
         expect(mockInternalContext.removePortal).toBeCalledWith(portal.id);
       });
@@ -137,7 +145,7 @@ describe("portalFactory", () => {
       it("invokes requestClosePortal", () => {
         portal.onRequestClose();
         expect(mockInternalContext.requestClosePortal).toBeCalledWith(
-          portal.id
+          portal.id,
         );
       });
     });

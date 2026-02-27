@@ -1,5 +1,5 @@
 import React from "react";
-import { PromisePortalActions } from "./types";
+import type { PromisePortalActions } from "./types";
 
 const DEFAULT_ERROR_MSG = "No provider found";
 

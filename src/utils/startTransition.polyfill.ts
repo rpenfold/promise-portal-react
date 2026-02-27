@@ -3,7 +3,7 @@
  * Otherwise we just ignore it.
  */
 
-/* @ts-ignore */ // eslint-disable-line @typescript-eslint/ban-ts-comment
-import { startTransition } from 'react';
+// @ts-expect-error startTransition may not exist on React in older versions
+import { startTransition } from "react";
 
 export default startTransition ?? ((fn: () => void) => fn());

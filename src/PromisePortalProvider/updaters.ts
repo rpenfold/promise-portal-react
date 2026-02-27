@@ -1,4 +1,4 @@
-import { Portal } from "../types";
+import type { Portal } from "../types";
 
 export type SetPortals = React.Dispatch<React.SetStateAction<Portal[]>>;
 
@@ -16,7 +16,7 @@ type PortalStateUpdater<T extends Array<unknown>> = (
  */
 export function composeUpdater<T extends Array<unknown>>(
   SetPortals: SetPortals,
-  updater: PortalStateUpdater<T>
+  updater: PortalStateUpdater<T>,
 ) {
   return (...args: T): void => {
     SetPortals(updater(...args));
@@ -29,9 +29,8 @@ export function composeUpdater<T extends Array<unknown>>(
  */
 export const addPortalUpdater =
   (portal: Portal) =>
-  (portals: Array<Portal>): Array<Portal> => !(portals.some(p => p.id === portal.id))
-    ? [...portals, portal]
-    : portals;
+  (portals: Array<Portal>): Array<Portal> =>
+    !portals.some((p) => p.id === portal.id) ? [...portals, portal] : portals;
 
 /**
  * Updater for removing a portal from the stack by id.
@@ -49,5 +48,5 @@ export const modifyPortalByIdUpdater =
   (id: string) =>
   (portals: Array<Portal>): Array<Portal> =>
     portals.map((portal) =>
-      portal.id === id ? { ...portal, ...changes } : portal
+      portal.id === id ? { ...portal, ...changes } : portal,
     );

@@ -44,7 +44,7 @@ describe("ComponentRegistry", () => {
     it("return component if it was registered", () => {
       ComponentRegistry.register(mockComponent1.key, mockComponent1.Component);
       expect(ComponentRegistry.find(mockComponent1.key)).toEqual(
-        mockComponent1.Component
+        mockComponent1.Component,
       );
     });
 

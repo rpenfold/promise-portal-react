@@ -1,27 +1,27 @@
-import React, { Suspense, useState, useCallback } from "react";
-import startTransition from '../utils/startTransition.polyfill';
-import PromisePortalContext from "../PromisePortalContext";
-import PromiseComponent from "../PromiseComponent";
+import React, { Suspense, useCallback, useState } from "react";
 import ComponentRegistry from "../ComponentRegistry";
-import {
-  Portal,
-  PortalComponentType,
-  PromisePortalProviderProps as Props,
-  PromiseComponentResult,
+import Dispatcher from "../Dispatcher";
+import PromiseComponent from "../PromiseComponent";
+import PromisePortalContext from "../PromisePortalContext";
+import type {
   ComponentParam,
   ComponentProps,
+  Portal,
+  PortalComponentType,
+  PromiseComponentResult,
+  PromisePortalProviderProps as Props,
 } from "../types";
-import {
-  composeUpdater,
-  addPortalUpdater,
-  removePortalByIdUpdater,
-  modifyPortalByIdUpdater,
-} from "./updaters";
-import Dispatcher from "../Dispatcher";
-import { buildAwaitablePortal, buildPortal } from "./portalFactory";
-import { ProviderInternalContext, MatchPortalPredicate } from "./types";
-import getComponentName from "../utils/getComponentName";
 import checkIsClassComponent from "../utils/checkIsClassComponent";
+import getComponentName from "../utils/getComponentName";
+import startTransition from "../utils/startTransition.polyfill";
+import { buildAwaitablePortal, buildPortal } from "./portalFactory";
+import type { MatchPortalPredicate, ProviderInternalContext } from "./types";
+import {
+  addPortalUpdater,
+  composeUpdater,
+  modifyPortalByIdUpdater,
+  removePortalByIdUpdater,
+} from "./updaters";
 
 /**
  * Removes all components. Iterates across all existing components and cancels them individually. This
@@ -45,17 +45,18 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
 
   const removePortal = useCallback(
     composeUpdater<[id: string]>(setPortals, removePortalByIdUpdater),
-    []
+    [],
   );
 
   const requestClosePortal = useCallback(
     composeUpdater<[id: string]>(
       setPortals,
-      modifyPortalByIdUpdater({ open: false })
+      modifyPortalByIdUpdater({ open: false }),
     ),
-    []
+    [],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: clear must update when portals array changes
   const clear = useCallback(clearPortals(portals), [portals]);
 
   const internalContext: ProviderInternalContext = {
@@ -64,10 +65,11 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
     setPortals,
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: internalContext is stable by construction; deps would cause unnecessary churn
   const showPortalAsync = useCallback(
     <T,>(
       component: ComponentParam,
-      props: ComponentProps = {}
+      props: ComponentProps = {},
     ): Promise<PromiseComponentResult<T>> => {
       const Component = (
         typeof component === "string"
@@ -79,20 +81,20 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
         const portal = buildAwaitablePortal<T>(resolve, reject)(
           Component,
           props,
-          internalContext
+          internalContext,
         ) as Portal;
 
         startTransition(() => {
           setPortals(addPortalUpdater(portal));
-        })
+        });
       });
     },
-    []
+    [],
   );
 
   const showPortal = (
     component: ComponentParam,
-    props: ComponentProps = {}
+    props: ComponentProps = {},
   ) => {
     const Component = (
       typeof component === "string"
@@ -123,7 +125,9 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
       {children}
       <Suspense fallback={null}>
         {portals.map((portal, index) => {
-          return <PromiseComponent key={portal.id} index={index} data={portal} />;
+          return (
+            <PromiseComponent key={portal.id} index={index} data={portal} />
+          );
         })}
         <Dispatcher {...actions} />
       </Suspense>

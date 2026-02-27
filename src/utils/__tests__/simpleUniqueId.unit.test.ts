@@ -6,8 +6,9 @@ describe("simpleUniqueId", () => {
   it("generates unique IDs", () => {
     const ids: Array<string> = [];
     for (let i = 0; i < 10000; i++) {
-      const newId = (ids[i] = generateSimpleUniqueId());
-      expect(ids.findIndex((id) => id === newId)).toEqual(i); // should not find value before current index
+      ids[i] = generateSimpleUniqueId();
+      const newId = ids[i];
+      expect(ids.indexOf(newId)).toEqual(i); // should not find value before current index
     }
   });
 });

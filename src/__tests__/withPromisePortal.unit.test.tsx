@@ -1,8 +1,8 @@
-import React from "react";
 import { shallow } from "enzyme";
+import React from "react";
 import PromisePortalContext from "../PromisePortalContext";
+import type { PromisePortalActions } from "../types";
 import withPromisePortal from "../withPromisePortal";
-import { PromisePortalActions } from "../types";
 
 interface MockComponentProp {
   someProp: string;

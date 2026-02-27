@@ -1,11 +1,11 @@
-import { Portal } from "../../types";
-import getMockPortal from "./mockPortal";
+import type { Portal } from "../../types";
 import {
   addPortalUpdater,
   composeUpdater,
-  removePortalByIdUpdater,
   modifyPortalByIdUpdater,
+  removePortalByIdUpdater,
 } from "../updaters";
+import getMockPortal from "./mockPortal";
 
 describe("PromisePortalProvider.updaters", () => {
   const mockPortals = [getMockPortal("1"), getMockPortal("2")];

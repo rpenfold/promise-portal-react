@@ -1,10 +1,11 @@
-import React, { ComponentType, ReactNode } from "react";
-import getComponentName from "./utils/getComponentName";
+// biome-ignore lint/style/useImportType: React must be value import for JSX
+import React, { type ComponentType, type ReactNode } from "react";
 import PromisePortalContext from "./PromisePortalContext";
-import { PromisePortalActions } from "./types";
+import type { PromisePortalActions } from "./types";
+import getComponentName from "./utils/getComponentName";
 
 function withPromisePortal<PassedProps>(
-  WrappedComponent: ComponentType<PassedProps & PromisePortalActions>
+  WrappedComponent: ComponentType<PassedProps & PromisePortalActions>,
 ): ComponentType<PassedProps> {
   const wrapComponent: React.FC<PassedProps> = (props: PassedProps) => {
     return (

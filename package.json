@@ -6,11 +6,11 @@
   "scripts": {
     "build": "npm run lint && rm -rf ./dist && tsc",
     "start": "tsc --watch --outDir ./example/node_modules/promise-portal-react/dist",
-    "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0",
+    "lint": "biome check .",
     "prepare": "npm run build",
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write src"
+    "format": "biome format --write ."
   },
   "repository": {
     "type": "git",
@@ -32,19 +32,15 @@
     "react": "*"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
     "@testing-library/react-hooks": "7.0.0",
     "@types/cheerio": "0.22.30",
     "@types/enzyme": "3.10.11",
     "@types/jest": "27.4.0",
     "@types/react": "17.0.8",
-    "@typescript-eslint/eslint-plugin": "5.8.1",
-    "@typescript-eslint/parser": "5.8.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
-    "eslint": "8.9.0",
-    "eslint-plugin-react": "7.28.0",
     "jest": "27.5.1",
-    "prettier": "2.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-test-renderer": "16.13.1",

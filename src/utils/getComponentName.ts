@@ -1,7 +1,8 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 
 export default function getComponentName(
-  Component: ComponentType<any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: generic component type for display name resolution
+  Component: ComponentType<any>,
 ): string {
   return Component.displayName ?? Component.name ?? "Component";
 }

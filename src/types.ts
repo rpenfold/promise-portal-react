@@ -1,5 +1,5 @@
-import { ComponentType, ErrorInfo, ReactNode, RefObject } from "react";
-import { MatchPortalPredicate } from "./PromisePortalProvider/types";
+import type { ComponentType, ErrorInfo, ReactNode, RefObject } from "react";
+import type { MatchPortalPredicate } from "./PromisePortalProvider/types";
 
 export type ComponentParam = ComponentType<unknown> | ReactNode | string;
 
@@ -40,11 +40,11 @@ export interface ShowPortalResult {
 export interface PromisePortalActions {
   showPortal(
     component: ComponentParam,
-    props?: ComponentProps
+    props?: ComponentProps,
   ): ShowPortalResult;
   showPortalAsync<T = unknown>(
     component: ComponentParam,
-    props?: ComponentProps
+    props?: ComponentProps,
   ): Promise<PromiseComponentResult<T>>;
   clear(predicate?: MatchPortalPredicate): void;
 }

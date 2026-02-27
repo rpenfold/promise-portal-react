@@ -1,20 +1,21 @@
-import React from "react";
 import { shallow } from "enzyme";
-import getMockPortal from "./mockPortal";
+import React from "react";
 import { withPromisePortal } from "../..";
-import { Portal, PromisePortalActions } from "../../types";
-import { MatchPortalPredicate } from "../types";
+import type { Portal, PromisePortalActions } from "../../types";
 import { clearPortals, PromisePortalProvider } from "../PromisePortalProvider";
+import type { MatchPortalPredicate } from "../types";
+import getMockPortal from "./mockPortal";
 
 class BaseMockComponent extends React.Component {}
-const MockComponent = withPromisePortal<any>(BaseMockComponent); // eslint-disable-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: mock HOC accepts any props
+const MockComponent = withPromisePortal<any>(BaseMockComponent);
 
 describe("PromisePortalProvider", () => {
   describe("<PromisePortalProvider />", () => {
     const wrapper = shallow(
       <PromisePortalProvider>
         <MockComponent />
-      </PromisePortalProvider>
+      </PromisePortalProvider>,
     );
     const accessor = wrapper.dive().at(0).dive().dive();
     const { showPortal, showPortalAsync } =
@@ -37,9 +38,9 @@ describe("PromisePortalProvider", () => {
       const mockPortals = [getMockPortal("1"), getMockPortal("2")];
       clearPortals(mockPortals)();
 
-      mockPortals.forEach((portal: Portal) =>
-        expect(portal.onCancel).toBeCalled()
-      );
+      mockPortals.forEach((portal: Portal) => {
+        expect(portal.onCancel).toBeCalled();
+      });
     });
 
     it("cancels only portals that match the predicate if provided", () => {

@@ -1,9 +1,9 @@
-import React, { ComponentType } from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { type ShallowWrapper, shallow } from "enzyme";
+import React, { type ComponentType } from "react";
 import PromiseComponent, {
-  Props as InternalPromiseComponentProps,
+  type Props as InternalPromiseComponentProps,
 } from "../PromiseComponent";
-import { PromiseComponentProps, Portal } from "../types";
+import type { Portal, PromiseComponentProps } from "../types";
 
 class MockComponent extends React.Component {}
 type Wrapper = ShallowWrapper<
