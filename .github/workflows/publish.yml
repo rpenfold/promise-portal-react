@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Branch
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm ci
@@ -20,22 +20,35 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - name: Checkout Branch
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Package version
-        run: echo ${GITHUB_REF##*/}
-      - name: Node version
-        run: node -v
-      - name: NPM version
-        run: npm -v
+        with:
+          ref: ${{ github.ref }}
+      - name: Set version from tag
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          npm version "$VERSION" --no-git-tag-version
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
+      - name: Commit version back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: release ${{ github.ref_name }}"
+          TAG="${{ github.ref_name }}"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
+          git push origin :refs/tags/$TAG || true
+          git tag "$TAG"
+          git push origin "$TAG"
       - name: Publish
         run: npm publish --access public
         env:
