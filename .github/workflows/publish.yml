@@ -18,6 +18,7 @@ jobs:
       - name: Run Tests
         run: npm t
   publish:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node
