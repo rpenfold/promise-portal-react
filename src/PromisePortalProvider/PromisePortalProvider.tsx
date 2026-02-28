@@ -13,6 +13,7 @@ import type {
 } from "../types";
 import checkIsClassComponent from "../utils/checkIsClassComponent";
 import getComponentName from "../utils/getComponentName";
+import generateSimpleUniqueId from "../utils/simpleUniqueId";
 import startTransition from "../utils/startTransition.polyfill";
 import { buildAwaitablePortal, buildPortal } from "./portalFactory";
 import type { MatchPortalPredicate, ProviderInternalContext } from "./types";
@@ -40,8 +41,13 @@ export const clearPortals =
     });
   };
 
-export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
+export const PromisePortalProvider: React.FC<Props> = ({
+  children,
+  key: keyProp,
+}: Props) => {
   const [portals, setPortals] = useState<Array<Portal>>([]);
+  const [generatedId] = useState(() => generateSimpleUniqueId());
+  const providerKey = keyProp ?? generatedId;
 
   const removePortal = useCallback(
     composeUpdater<[id: string]>(setPortals, removePortalByIdUpdater),
@@ -129,7 +135,7 @@ export const PromisePortalProvider: React.FC<Props> = ({ children }: Props) => {
             <PromiseComponent key={portal.id} index={index} data={portal} />
           );
         })}
-        <Dispatcher {...actions} />
+        <Dispatcher {...actions} providerKey={providerKey} />
       </Suspense>
     </PromisePortalContext.Provider>
   );

@@ -78,4 +78,9 @@ export interface Portal<T = unknown> {
 
 export interface PromisePortalProviderProps {
   children: ReactNode;
+  /** Optional stable key for this provider. Used for targeted dispatch via the static API. If omitted, a unique id is generated. */
+  key?: string;
 }
+
+/** Props passed to the internal Dispatcher (actions + provider identity). */
+export type DispatcherProps = PromisePortalActions & { providerKey: string };

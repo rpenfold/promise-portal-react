@@ -38,6 +38,8 @@ import PromisePortal from "promise-portal-react";
 
 Any components that you show through promise-portal will be mounted here in the view tree.
 
+You can optionally pass a stable `key` prop to the provider (e.g. `key="modal-root"`). This is used for [targeted dispatch](#multiple-providers-and-targeted-dispatch) when you have multiple providers; if omitted, a unique id is generated automatically.
+
 ## Usage
 
 Now, to show a component using the `usePromisePortal` hook:
@@ -105,6 +107,25 @@ function MyComponent() {
 | Prop | Type | Description | Default |
 |---|---|---|---|
 | closeStrategy | 'cancel', 'requestClose' | The method to use when closing the portal. `cancel` will clear the portal immediately, `requestClose` toggles the component's `open` prop for orchestrating close transistions. | 'cancel' |
+
+## Multiple providers and targeted dispatch
+
+You can mount multiple `PromisePortal.Provider` components (e.g. one for modals, one for toasts). Give each a stable `key` when you need to target a specific one from outside the React tree:
+
+```javascript
+<PromisePortal.Provider key="modal-root">...</PromisePortal.Provider>
+<PromisePortal.Provider key="toast-root">...</PromisePortal.Provider>
+```
+
+When using the static API (`PromisePortal.showPortal`, `PromisePortal.showPortalAsync`, or `PromisePortal.clear`), you can pass an options object with `providerKey` as the last argument to target that provider. Without `providerKey`, the call goes to the most recently mounted provider.
+
+```javascript
+PromisePortal.showPortal(MyModal, {}, { providerKey: "modal-root" });
+await PromisePortal.showPortalAsync(MyModal, {}, { providerKey: "modal-root" });
+PromisePortal.clear(undefined, { providerKey: "toast-root" });
+```
+
+Keys should be stable and unique. If you pass a `providerKey` that does not exist or whose provider has unmounted, the call will throw.
 
 ## Why use promise portal?
 
