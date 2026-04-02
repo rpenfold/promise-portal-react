@@ -38,7 +38,7 @@ import PromisePortal from "promise-portal-react";
 
 Any components that you show through promise-portal will be mounted here in the view tree.
 
-You can optionally pass a stable `key` prop to the provider (e.g. `key="modal-root"`). This is used for [targeted dispatch](#multiple-providers-and-targeted-dispatch) when you have multiple providers; if omitted, a unique id is generated automatically.
+You can optionally pass a stable `providerKey` prop to the provider (e.g. `providerKey="modal-root"`). This is used for [targeted dispatch](#multiple-providers-and-targeted-dispatch) when you have multiple providers; if omitted, a unique id is generated automatically.
 
 ## Usage
 
@@ -113,8 +113,8 @@ function MyComponent() {
 You can mount multiple `PromisePortal.Provider` components (e.g. one for modals, one for toasts). Give each a stable `key` when you need to target a specific one from outside the React tree:
 
 ```javascript
-<PromisePortal.Provider key="modal-root">...</PromisePortal.Provider>
-<PromisePortal.Provider key="toast-root">...</PromisePortal.Provider>
+<PromisePortal.Provider providerKey="modal-root">...</PromisePortal.Provider>
+<PromisePortal.Provider providerKey="toast-root">...</PromisePortal.Provider>
 ```
 
 When using the static API (`PromisePortal.showPortal`, `PromisePortal.showPortalAsync`, or `PromisePortal.clear`), you can pass an options object with `providerKey` as the last argument to target that provider. Without `providerKey`, the call goes to the most recently mounted provider.

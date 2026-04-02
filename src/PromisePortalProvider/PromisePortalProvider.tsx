@@ -43,7 +43,7 @@ export const clearPortals =
 
 export const PromisePortalProvider: React.FC<Props> = ({
   children,
-  key: keyProp,
+  providerKey: keyProp,
 }: Props) => {
   const [portals, setPortals] = useState<Array<Portal>>([]);
   const [generatedId] = useState(() => generateSimpleUniqueId());
